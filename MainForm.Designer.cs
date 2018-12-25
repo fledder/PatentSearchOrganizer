@@ -28,20 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode36 = new System.Windows.Forms.TreeNode("8765432");
-            System.Windows.Forms.TreeNode treeNode37 = new System.Windows.Forms.TreeNode("8776543");
-            System.Windows.Forms.TreeNode treeNode38 = new System.Windows.Forms.TreeNode("References", new System.Windows.Forms.TreeNode[] {
-            treeNode36,
-            treeNode37});
-            System.Windows.Forms.TreeNode treeNode39 = new System.Windows.Forms.TreeNode("9987654");
-            System.Windows.Forms.TreeNode treeNode40 = new System.Windows.Forms.TreeNode("9988765");
-            System.Windows.Forms.TreeNode treeNode41 = new System.Windows.Forms.TreeNode("Referenced By", new System.Windows.Forms.TreeNode[] {
-            treeNode39,
-            treeNode40});
-            System.Windows.Forms.TreeNode treeNode42 = new System.Windows.Forms.TreeNode("9876543", new System.Windows.Forms.TreeNode[] {
-            treeNode38,
-            treeNode41});
-            this.treeView1 = new System.Windows.Forms.TreeView();
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("8765432");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("8776543");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("References", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2});
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("9987654");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("9988765");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Referenced By", new System.Windows.Forms.TreeNode[] {
+            treeNode4,
+            treeNode5});
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("9876543", new System.Windows.Forms.TreeNode[] {
+            treeNode3,
+            treeNode6});
+            this.tree = new System.Windows.Forms.TreeView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,30 +73,30 @@
             this.mainTabs.SuspendLayout();
             this.SuspendLayout();
             // 
-            // treeView1
+            // tree
             // 
-            this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.tree.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.treeView1.Location = new System.Drawing.Point(12, 61);
-            this.treeView1.Name = "treeView1";
-            treeNode36.Name = "8765432";
-            treeNode36.Text = "8765432";
-            treeNode37.Name = "8776543";
-            treeNode37.Text = "8776543";
-            treeNode38.Name = "References";
-            treeNode38.Text = "References";
-            treeNode39.Name = "9987654";
-            treeNode39.Text = "9987654";
-            treeNode40.Name = "9988765";
-            treeNode40.Text = "9988765";
-            treeNode41.Name = "Referenced By";
-            treeNode41.Text = "Referenced By";
-            treeNode42.Name = "9876543";
-            treeNode42.Text = "9876543";
-            this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode42});
-            this.treeView1.Size = new System.Drawing.Size(183, 544);
-            this.treeView1.TabIndex = 0;
+            this.tree.Location = new System.Drawing.Point(12, 61);
+            this.tree.Name = "tree";
+            treeNode1.Name = "8765432";
+            treeNode1.Text = "8765432";
+            treeNode2.Name = "8776543";
+            treeNode2.Text = "8776543";
+            treeNode3.Name = "References";
+            treeNode3.Text = "References";
+            treeNode4.Name = "9987654";
+            treeNode4.Text = "9987654";
+            treeNode5.Name = "9988765";
+            treeNode5.Text = "9988765";
+            treeNode6.Name = "Referenced By";
+            treeNode6.Text = "Referenced By";
+            treeNode7.Name = "9876543";
+            treeNode7.Text = "9876543";
+            this.tree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode7});
+            this.tree.Size = new System.Drawing.Size(183, 544);
+            this.tree.TabIndex = 0;
             // 
             // menuStrip1
             // 
@@ -346,7 +346,7 @@
             this.Controls.Add(this.pbSomewhatRelevant);
             this.Controls.Add(this.pbHighlyRelevant);
             this.Controls.Add(this.mainTabs);
-            this.Controls.Add(this.treeView1);
+            this.Controls.Add(this.tree);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
@@ -365,7 +365,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.TreeView tree;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;

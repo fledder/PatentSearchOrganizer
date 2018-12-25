@@ -71,6 +71,18 @@ namespace PatentSearchOrganizer
             itemData.Clear();
             itemData.ReadXml(filePath);
         }
+
+        public void updateTreeData(System.Windows.Forms.TreeView tree)
+        {
+            tree.Nodes.Clear();
+            EnumerableRowCollection<ItemDataset.itemsRow> lines = from item in itemData.items select item;
+            foreach(ItemDataset.itemsRow row in lines)
+            {
+                System.Windows.Forms.TreeNode parentNode = tree.Nodes.Add(row.id.ToString(), row.identifier);
+                parentNode.Nodes.Add("References");
+                parentNode.Nodes.Add("Referenced By");
+            }
+        }
     }
 
     class Item
@@ -82,6 +94,7 @@ namespace PatentSearchOrganizer
         private string claims;
         private List<byte[]> images;
         private int selectedImage;
+        private string fetchLink;
 
         //Getters, setters, selectors
         public string getTitle()
@@ -161,10 +174,12 @@ namespace PatentSearchOrganizer
                 }
                 itemData.AcceptChanges();
 
+                fetchLink = "https://patents.google.com/patent/US" + identifier;
+
                 //get the document from google. this will not be the same as the one
                 //rendered for a normal web browser
                 HtmlWeb hw = new HtmlWeb();
-                HtmlDocument hdoc = hw.Load("https://patents.google.com/patent/US" + identifier);
+                HtmlDocument hdoc = hw.Load(fetchLink);
 
                 //get the image source links from their xpath
                 string imageXpath = "/html/body/search-app/article/section[1]/ul/li/meta";
@@ -195,7 +210,7 @@ namespace PatentSearchOrganizer
                 title = hdoc.DocumentNode.SelectSingleNode(titleXpath).InnerHtml;
                 itemData.addItemComponent(id, "Title", title);
 
-                string abstractXpath = "//*[@id=\"p-0001\"]";
+                string abstractXpath = "/html/body/search-app/article/section[3]/div/abstract/div";
                 abstractText = hdoc.DocumentNode.SelectSingleNode(abstractXpath).InnerHtml;
                 itemData.addItemComponent(id, "Abstract", abstractText);
 
@@ -208,6 +223,55 @@ namespace PatentSearchOrganizer
                 itemData.addItemComponent(id, "Claims", claims);
 
 
+            }
+        }
+
+        public void retrieveReferences(string dataSource, ItemDataset itemData)
+        {
+            updateFromLocal(itemData);
+
+            if(dataSource == "Google Patents")
+            {
+                string identifier = (from item in itemData.items where item.id == id select item.identifier).ElementAt(0);
+                fetchLink = "https://patents.google.com/patent/US" + identifier;
+
+                //get the document from google. this will not be the same as the one
+                //rendered for a normal web browser
+                HtmlWeb hw = new HtmlWeb();
+                HtmlDocument hdoc = hw.Load(fetchLink);
+
+                string sectionXpath = "/html/body/search-app/article/section";
+                HtmlNodeCollection section = hdoc.DocumentNode.SelectNodes(sectionXpath);
+
+                foreach(HtmlNode node in section)
+                {
+                    HtmlNode heading = node.SelectSingleNode("/h2");
+                    HtmlNode table = node.SelectSingleNode("/table");
+                    string refType = "Unknown";
+                    string direction = "Unknown";
+                    if(heading.InnerHtml.Contains("Citations"))
+                    {
+                        refType = "Citation";
+                        direction = "Forward";
+                    }
+                    else if(heading.InnerHtml.Contains("Cited By"))
+                    {
+                        refType = "Citation";
+                        direction = "Backward";
+                    }
+                    else if(heading.InnerHtml.Contains("Similar Documents"))
+                    {
+                        refType = "Similar";
+                        direction = "Forward";
+                    }
+                    if(refType != "Unknown")
+                    {
+                        if(direction == "Forward")
+                        {
+                            ;
+                        }
+                    }
+                }
             }
         }
 

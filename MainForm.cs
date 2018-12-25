@@ -26,7 +26,13 @@ namespace PatentSearchOrganizer
             selectedItem = items.getSelectedItem();
             selectedItem.retrieveData("Google Patents", this.items.itemData);
             selectedItem = items.getSelectedItem();
+            refreshTree();
             refreshDisplays();
+        }
+
+        public void refreshTree()
+        {
+            items.updateTreeData(tree);
         }
 
         public void refreshDisplays()
