@@ -60,6 +60,17 @@ namespace PatentSearchOrganizer
             returnItem.updateFromLocal(itemData);
             return returnItem;
         }
+
+        public void save(string filePath)
+        {
+            itemData.WriteXml(filePath);
+        }
+
+        public void load(string filePath)
+        {
+            itemData.Clear();
+            itemData.ReadXml(filePath);
+        }
     }
 
     class Item
@@ -101,16 +112,29 @@ namespace PatentSearchOrganizer
         public void selectNextImage()
         {
             selectedImage++;
+            if(selectedImage >= images.Count)
+            {
+                selectedImage = images.Count - 1;
+            }
         }
 
         public void selectPreviousImage()
         {
             selectedImage--;
+            if(selectedImage < 0)
+            {
+                selectedImage = 0;
+            }
         }
 
         public void selectImage(int selection)
         {
             selectedImage = selection;
+        }
+
+        public void selectLastImage()
+        {
+            selectedImage = images.Count - 1;
         }
 
         public Item(Int32 id)
@@ -179,7 +203,7 @@ namespace PatentSearchOrganizer
                 description = hdoc.DocumentNode.SelectSingleNode(descriptionXpath).InnerHtml;
                 itemData.addItemComponent(id, "Description", description);
 
-                string claimsXpath = "/html/body/search-app/article/section[5]/div/div/div[1]";
+                string claimsXpath = "/html/body/search-app/article/section[5]/div/div";
                 claims = hdoc.DocumentNode.SelectSingleNode(claimsXpath).InnerHtml;
                 itemData.addItemComponent(id, "Claims", claims);
 

@@ -26,6 +26,8 @@ namespace PatentSearchOrganizer
             this.Tables["itemComponents"].Rows.Add(newRow);
             this.Tables["itemComponents"].AcceptChanges();
         }
+
+        
     }
 }
 namespace PatentSearchOrganizer
