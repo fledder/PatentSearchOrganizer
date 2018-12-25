@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ItemDataset" targetNamespace="http://tempuri.org/data.xsd" xmlns:mstns="http://tempuri.org/data.xsd" xmlns="http://tempuri.org/data.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="ItemDataset" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="ItemDataset" msprop:Generator_UserDSName="ItemDataset">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="items" msprop:Generator_TableClassName="itemsDataTable" msprop:Generator_TableVarName="tableitems" msprop:Generator_RowChangedName="itemsRowChanged" msprop:Generator_TablePropName="items" msprop:Generator_RowDeletingName="itemsRowDeleting" msprop:Generator_RowChangingName="itemsRowChanging" msprop:Generator_RowEvHandlerName="itemsRowChangeEventHandler" msprop:Generator_RowDeletedName="itemsRowDeleted" msprop:Generator_RowClassName="itemsRow" msprop:Generator_UserTableName="items" msprop:Generator_RowEvArgName="itemsRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" />
+              <xs:element name="type" msprop:Generator_ColumnVarNameInTable="columntype" msprop:Generator_ColumnPropNameInRow="type" msprop:Generator_ColumnPropNameInTable="typeColumn" msprop:Generator_UserColumnName="type" type="xs:string" />
+              <xs:element name="identifier" msprop:Generator_ColumnVarNameInTable="columnidentifier" msprop:Generator_ColumnPropNameInRow="identifier" msprop:Generator_ColumnPropNameInTable="identifierColumn" msprop:Generator_UserColumnName="identifier" type="xs:string" />
+              <xs:element name="fetchLink" msprop:Generator_ColumnVarNameInTable="columnfetchLink" msprop:Generator_ColumnPropNameInRow="fetchLink" msprop:Generator_ColumnPropNameInTable="fetchLinkColumn" msprop:Generator_UserColumnName="fetchLink" type="xs:string" />
+              <xs:element name="relevance" msprop:Generator_ColumnVarNameInTable="columnrelevance" msprop:Generator_ColumnPropNameInRow="relevance" msprop:Generator_ColumnPropNameInTable="relevanceColumn" msprop:Generator_UserColumnName="relevance" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="references" msprop:Generator_TableClassName="referencesDataTable" msprop:Generator_TableVarName="tablereferences" msprop:Generator_RowChangedName="referencesRowChanged" msprop:Generator_TablePropName="references" msprop:Generator_RowDeletingName="referencesRowDeleting" msprop:Generator_RowChangingName="referencesRowChanging" msprop:Generator_RowEvHandlerName="referencesRowChangeEventHandler" msprop:Generator_RowDeletedName="referencesRowDeleted" msprop:Generator_RowClassName="referencesRow" msprop:Generator_UserTableName="references" msprop:Generator_RowEvArgName="referencesRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="fromID" msprop:Generator_ColumnVarNameInTable="columnfromID" msprop:Generator_ColumnPropNameInRow="fromID" msprop:Generator_ColumnPropNameInTable="fromIDColumn" msprop:Generator_UserColumnName="fromID" type="xs:int" />
+              <xs:element name="toID" msprop:Generator_ColumnVarNameInTable="columntoID" msprop:Generator_ColumnPropNameInRow="toID" msprop:Generator_ColumnPropNameInTable="toIDColumn" msprop:Generator_UserColumnName="toID" type="xs:int" />
+              <xs:element name="type" msprop:Generator_ColumnVarNameInTable="columntype" msprop:Generator_ColumnPropNameInRow="type" msprop:Generator_ColumnPropNameInTable="typeColumn" msprop:Generator_UserColumnName="type" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="itemComponents" msprop:Generator_TableClassName="itemComponentsDataTable" msprop:Generator_TableVarName="tableitemComponents" msprop:Generator_RowChangedName="itemComponentsRowChanged" msprop:Generator_TablePropName="itemComponents" msprop:Generator_RowDeletingName="itemComponentsRowDeleting" msprop:Generator_RowChangingName="itemComponentsRowChanging" msprop:Generator_RowEvHandlerName="itemComponentsRowChangeEventHandler" msprop:Generator_RowDeletedName="itemComponentsRowDeleted" msprop:Generator_RowClassName="itemComponentsRow" msprop:Generator_UserTableName="itemComponents" msprop:Generator_RowEvArgName="itemComponentsRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="itemID" msprop:Generator_ColumnVarNameInTable="columnitemID" msprop:Generator_ColumnPropNameInRow="itemID" msprop:Generator_ColumnPropNameInTable="itemIDColumn" msprop:Generator_UserColumnName="itemID" type="xs:int" />
+              <xs:element name="componentType" msprop:Generator_ColumnVarNameInTable="columncomponentType" msprop:Generator_ColumnPropNameInRow="componentType" msprop:Generator_ColumnPropNameInTable="componentTypeColumn" msprop:Generator_UserColumnName="componentType" type="xs:string" />
+              <xs:element name="componentData" msprop:Generator_ColumnVarNameInTable="columncomponentData" msprop:Generator_ColumnPropNameInRow="componentData" msprop:Generator_ColumnPropNameInTable="componentDataColumn" msprop:Generator_UserColumnName="componentData" type="xs:base64Binary" minOccurs="0" />
+              <xs:element name="fileExtension" msprop:Generator_ColumnVarNameInTable="columnfileExtension" msprop:Generator_ColumnPropNameInRow="fileExtension" msprop:Generator_ColumnPropNameInTable="fileExtensionColumn" msprop:Generator_UserColumnName="fileExtension" type="xs:string" minOccurs="0" />
+              <xs:element name="componentStringValue" msprop:Generator_ColumnVarNameInTable="columncomponentStringValue" msprop:Generator_ColumnPropNameInRow="componentStringValue" msprop:Generator_ColumnPropNameInTable="componentStringValueColumn" msprop:Generator_UserColumnName="componentStringValue" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1">
+      <xs:selector xpath=".//mstns:items" />
+      <xs:field xpath="mstns:id" />
+    </xs:unique>
+    <xs:keyref name="FK_items_itemComponents" refer="Constraint1" msprop:rel_Generator_UserChildTable="itemComponents" msprop:rel_Generator_ChildPropName="GetitemComponentsRows" msprop:rel_Generator_UserRelationName="FK_items_itemComponents" msprop:rel_Generator_RelationVarName="relationFK_items_itemComponents" msprop:rel_Generator_UserParentTable="items" msprop:rel_Generator_ParentPropName="itemsRow">
+      <xs:selector xpath=".//mstns:itemComponents" />
+      <xs:field xpath="mstns:itemID" />
+    </xs:keyref>
+    <xs:keyref name="FK_items_references" refer="Constraint1" msprop:rel_Generator_UserChildTable="references" msprop:rel_Generator_ChildPropName="GetreferencesRowsByFK_items_references" msprop:rel_Generator_UserRelationName="FK_items_references" msprop:rel_Generator_RelationVarName="relationFK_items_references" msprop:rel_Generator_UserParentTable="items" msprop:rel_Generator_ParentPropName="itemsRowByFK_items_references">
+      <xs:selector xpath=".//mstns:references" />
+      <xs:field xpath="mstns:fromID" />
+    </xs:keyref>
+    <xs:keyref name="FK_items_references1" refer="Constraint1" msprop:rel_Generator_UserChildTable="references" msprop:rel_Generator_ChildPropName="GetreferencesRowsByFK_items_references1" msprop:rel_Generator_UserRelationName="FK_items_references1" msprop:rel_Generator_RelationVarName="relationFK_items_references1" msprop:rel_Generator_UserParentTable="items" msprop:rel_Generator_ParentPropName="itemsRowByFK_items_references1">
+      <xs:selector xpath=".//mstns:references" />
+      <xs:field xpath="mstns:toID" />
+    </xs:keyref>
+  </xs:element>
+</xs:schema>
