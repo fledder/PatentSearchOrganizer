@@ -570,7 +570,6 @@ namespace PatentSearchOrganizer {
                 this.columnid.Unique = true;
                 this.columntype.AllowDBNull = false;
                 this.columnidentifier.AllowDBNull = false;
-                this.columnfetchLink.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1340,7 +1339,12 @@ namespace PatentSearchOrganizer {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public string fetchLink {
                 get {
-                    return ((string)(this[this.tableitems.fetchLinkColumn]));
+                    try {
+                        return ((string)(this[this.tableitems.fetchLinkColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'fetchLink\' in table \'items\' is DBNull.", e);
+                    }
                 }
                 set {
                     this[this.tableitems.fetchLinkColumn] = value;
@@ -1361,6 +1365,18 @@ namespace PatentSearchOrganizer {
                 set {
                     this[this.tableitems.relevanceColumn] = value;
                 }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsfetchLinkNull() {
+                return this.IsNull(this.tableitems.fetchLinkColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetfetchLinkNull() {
+                this[this.tableitems.fetchLinkColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

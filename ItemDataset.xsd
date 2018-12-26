@@ -18,7 +18,7 @@
               <xs:element name="id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" />
               <xs:element name="type" msprop:Generator_ColumnVarNameInTable="columntype" msprop:Generator_ColumnPropNameInRow="type" msprop:Generator_ColumnPropNameInTable="typeColumn" msprop:Generator_UserColumnName="type" type="xs:string" />
               <xs:element name="identifier" msprop:Generator_ColumnVarNameInTable="columnidentifier" msprop:Generator_ColumnPropNameInRow="identifier" msprop:Generator_ColumnPropNameInTable="identifierColumn" msprop:Generator_UserColumnName="identifier" type="xs:string" />
-              <xs:element name="fetchLink" msprop:Generator_ColumnVarNameInTable="columnfetchLink" msprop:Generator_ColumnPropNameInRow="fetchLink" msprop:Generator_ColumnPropNameInTable="fetchLinkColumn" msprop:Generator_UserColumnName="fetchLink" type="xs:string" />
+              <xs:element name="fetchLink" msprop:Generator_ColumnVarNameInTable="columnfetchLink" msprop:Generator_ColumnPropNameInRow="fetchLink" msprop:Generator_ColumnPropNameInTable="fetchLinkColumn" msprop:Generator_UserColumnName="fetchLink" type="xs:string" minOccurs="0" />
               <xs:element name="relevance" msprop:Generator_ColumnVarNameInTable="columnrelevance" msprop:Generator_ColumnPropNameInRow="relevance" msprop:Generator_ColumnPropNameInTable="relevanceColumn" msprop:Generator_UserColumnName="relevance" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>

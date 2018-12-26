@@ -44,27 +44,32 @@
             this.tree = new System.Windows.Forms.TreeView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pbHighlyRelevant = new System.Windows.Forms.Button();
             this.pbSomewhatRelevant = new System.Windows.Forms.Button();
             this.pbMinimallyRelevant = new System.Windows.Forms.Button();
             this.pbNotRelevant = new System.Windows.Forms.Button();
             this.figures = new System.Windows.Forms.TabPage();
-            this.figurePictureBox = new System.Windows.Forms.PictureBox();
-            this.firstImageButton = new System.Windows.Forms.Button();
-            this.previousImageButton = new System.Windows.Forms.Button();
-            this.nextImageButton = new System.Windows.Forms.Button();
             this.lastImageButton = new System.Windows.Forms.Button();
+            this.nextImageButton = new System.Windows.Forms.Button();
+            this.previousImageButton = new System.Windows.Forms.Button();
+            this.firstImageButton = new System.Windows.Forms.Button();
+            this.figurePictureBox = new System.Windows.Forms.PictureBox();
             this.specification = new System.Windows.Forms.TabPage();
             this.specificationBrowser = new System.Windows.Forms.WebBrowser();
             this.briefData = new System.Windows.Forms.TabPage();
-            this.itemTitle = new System.Windows.Forms.Label();
-            this.itemAbstract = new System.Windows.Forms.RichTextBox();
             this.claimsWebBrowser = new System.Windows.Forms.WebBrowser();
+            this.itemAbstract = new System.Windows.Forms.RichTextBox();
+            this.itemTitle = new System.Windows.Forms.Label();
             this.mainTabs = new System.Windows.Forms.TabControl();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fetchDataGoogleButton = new System.Windows.Forms.Button();
+            this.addUSButton = new System.Windows.Forms.Button();
+            this.patPubTextBox = new System.Windows.Forms.MaskedTextBox();
+            this.cpcSearchButton = new System.Windows.Forms.Button();
+            this.cpcSearchTerm = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.figures.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.figurePictureBox)).BeginInit();
@@ -97,6 +102,7 @@
             treeNode7});
             this.tree.Size = new System.Drawing.Size(183, 544);
             this.tree.TabIndex = 0;
+            this.tree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tree_AfterSelect);
             // 
             // menuStrip1
             // 
@@ -118,6 +124,27 @@
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // saveAsToolStripMenuItem
+            // 
+            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.saveAsToolStripMenuItem.Text = "Save As";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.openToolStripMenuItem.Text = "Open";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -180,38 +207,16 @@
             this.figures.Text = "Figures";
             this.figures.UseVisualStyleBackColor = true;
             // 
-            // figurePictureBox
+            // lastImageButton
             // 
-            this.figurePictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.figurePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.figurePictureBox.Location = new System.Drawing.Point(6, 33);
-            this.figurePictureBox.Name = "figurePictureBox";
-            this.figurePictureBox.Size = new System.Drawing.Size(502, 479);
-            this.figurePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.figurePictureBox.TabIndex = 0;
-            this.figurePictureBox.TabStop = false;
-            // 
-            // firstImageButton
-            // 
-            this.firstImageButton.Location = new System.Drawing.Point(6, 4);
-            this.firstImageButton.Name = "firstImageButton";
-            this.firstImageButton.Size = new System.Drawing.Size(75, 23);
-            this.firstImageButton.TabIndex = 1;
-            this.firstImageButton.Text = "First";
-            this.firstImageButton.UseVisualStyleBackColor = true;
-            this.firstImageButton.Click += new System.EventHandler(this.firstImageButton_Click);
-            // 
-            // previousImageButton
-            // 
-            this.previousImageButton.Location = new System.Drawing.Point(87, 4);
-            this.previousImageButton.Name = "previousImageButton";
-            this.previousImageButton.Size = new System.Drawing.Size(75, 23);
-            this.previousImageButton.TabIndex = 1;
-            this.previousImageButton.Text = "Previous";
-            this.previousImageButton.UseVisualStyleBackColor = true;
-            this.previousImageButton.Click += new System.EventHandler(this.previousImageButton_Click);
+            this.lastImageButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lastImageButton.Location = new System.Drawing.Point(433, 4);
+            this.lastImageButton.Name = "lastImageButton";
+            this.lastImageButton.Size = new System.Drawing.Size(75, 23);
+            this.lastImageButton.TabIndex = 1;
+            this.lastImageButton.Text = "Last";
+            this.lastImageButton.UseVisualStyleBackColor = true;
+            this.lastImageButton.Click += new System.EventHandler(this.lastImageButton_Click);
             // 
             // nextImageButton
             // 
@@ -224,16 +229,38 @@
             this.nextImageButton.UseVisualStyleBackColor = true;
             this.nextImageButton.Click += new System.EventHandler(this.nextImageButton_Click);
             // 
-            // lastImageButton
+            // previousImageButton
             // 
-            this.lastImageButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lastImageButton.Location = new System.Drawing.Point(433, 4);
-            this.lastImageButton.Name = "lastImageButton";
-            this.lastImageButton.Size = new System.Drawing.Size(75, 23);
-            this.lastImageButton.TabIndex = 1;
-            this.lastImageButton.Text = "Last";
-            this.lastImageButton.UseVisualStyleBackColor = true;
-            this.lastImageButton.Click += new System.EventHandler(this.lastImageButton_Click);
+            this.previousImageButton.Location = new System.Drawing.Point(87, 4);
+            this.previousImageButton.Name = "previousImageButton";
+            this.previousImageButton.Size = new System.Drawing.Size(75, 23);
+            this.previousImageButton.TabIndex = 1;
+            this.previousImageButton.Text = "Previous";
+            this.previousImageButton.UseVisualStyleBackColor = true;
+            this.previousImageButton.Click += new System.EventHandler(this.previousImageButton_Click);
+            // 
+            // firstImageButton
+            // 
+            this.firstImageButton.Location = new System.Drawing.Point(6, 4);
+            this.firstImageButton.Name = "firstImageButton";
+            this.firstImageButton.Size = new System.Drawing.Size(75, 23);
+            this.firstImageButton.TabIndex = 1;
+            this.firstImageButton.Text = "First";
+            this.firstImageButton.UseVisualStyleBackColor = true;
+            this.firstImageButton.Click += new System.EventHandler(this.firstImageButton_Click);
+            // 
+            // figurePictureBox
+            // 
+            this.figurePictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.figurePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.figurePictureBox.Location = new System.Drawing.Point(6, 33);
+            this.figurePictureBox.Name = "figurePictureBox";
+            this.figurePictureBox.Size = new System.Drawing.Size(502, 479);
+            this.figurePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.figurePictureBox.TabIndex = 0;
+            this.figurePictureBox.TabStop = false;
             // 
             // specification
             // 
@@ -269,17 +296,14 @@
             this.briefData.Text = "Brief Overview";
             this.briefData.UseVisualStyleBackColor = true;
             // 
-            // itemTitle
+            // claimsWebBrowser
             // 
-            this.itemTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.itemTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.itemTitle.Location = new System.Drawing.Point(3, 3);
-            this.itemTitle.Name = "itemTitle";
-            this.itemTitle.Size = new System.Drawing.Size(505, 40);
-            this.itemTitle.TabIndex = 0;
-            this.itemTitle.Text = "Title of the Item";
-            this.itemTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.claimsWebBrowser.AllowNavigation = false;
+            this.claimsWebBrowser.Location = new System.Drawing.Point(7, 172);
+            this.claimsWebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.claimsWebBrowser.Name = "claimsWebBrowser";
+            this.claimsWebBrowser.Size = new System.Drawing.Size(501, 343);
+            this.claimsWebBrowser.TabIndex = 2;
             // 
             // itemAbstract
             // 
@@ -292,14 +316,17 @@
             this.itemAbstract.TabIndex = 1;
             this.itemAbstract.Text = "";
             // 
-            // claimsWebBrowser
+            // itemTitle
             // 
-            this.claimsWebBrowser.AllowNavigation = false;
-            this.claimsWebBrowser.Location = new System.Drawing.Point(7, 172);
-            this.claimsWebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
-            this.claimsWebBrowser.Name = "claimsWebBrowser";
-            this.claimsWebBrowser.Size = new System.Drawing.Size(501, 343);
-            this.claimsWebBrowser.TabIndex = 2;
+            this.itemTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.itemTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.itemTitle.Location = new System.Drawing.Point(3, 3);
+            this.itemTitle.Name = "itemTitle";
+            this.itemTitle.Size = new System.Drawing.Size(505, 40);
+            this.itemTitle.TabIndex = 0;
+            this.itemTitle.Text = "Title of the Item";
+            this.itemTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // mainTabs
             // 
@@ -315,32 +342,65 @@
             this.mainTabs.Size = new System.Drawing.Size(522, 544);
             this.mainTabs.TabIndex = 2;
             // 
-            // saveToolStripMenuItem
+            // fetchDataGoogleButton
             // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.saveToolStripMenuItem.Text = "Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            this.fetchDataGoogleButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.fetchDataGoogleButton.Location = new System.Drawing.Point(729, 233);
+            this.fetchDataGoogleButton.Name = "fetchDataGoogleButton";
+            this.fetchDataGoogleButton.Size = new System.Drawing.Size(144, 27);
+            this.fetchDataGoogleButton.TabIndex = 4;
+            this.fetchDataGoogleButton.Text = "Fetch Data (Google)";
+            this.fetchDataGoogleButton.UseVisualStyleBackColor = true;
+            this.fetchDataGoogleButton.Click += new System.EventHandler(this.fetchDataGoogleButton_Click);
             // 
-            // saveAsToolStripMenuItem
+            // addUSButton
             // 
-            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.saveAsToolStripMenuItem.Text = "Save As";
-            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
+            this.addUSButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.addUSButton.Location = new System.Drawing.Point(729, 343);
+            this.addUSButton.Name = "addUSButton";
+            this.addUSButton.Size = new System.Drawing.Size(144, 27);
+            this.addUSButton.TabIndex = 5;
+            this.addUSButton.Text = "Add US patent / pub";
+            this.addUSButton.UseVisualStyleBackColor = true;
+            this.addUSButton.Click += new System.EventHandler(this.addUSButton_Click);
             // 
-            // openToolStripMenuItem
+            // patPubTextBox
             // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.openToolStripMenuItem.Text = "Open";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            this.patPubTextBox.Location = new System.Drawing.Point(725, 317);
+            this.patPubTextBox.Mask = "00000000000";
+            this.patPubTextBox.Name = "patPubTextBox";
+            this.patPubTextBox.Size = new System.Drawing.Size(148, 20);
+            this.patPubTextBox.TabIndex = 6;
+            // 
+            // cpcSearchButton
+            // 
+            this.cpcSearchButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cpcSearchButton.Location = new System.Drawing.Point(729, 482);
+            this.cpcSearchButton.Name = "cpcSearchButton";
+            this.cpcSearchButton.Size = new System.Drawing.Size(144, 27);
+            this.cpcSearchButton.TabIndex = 7;
+            this.cpcSearchButton.Text = "CPC search";
+            this.cpcSearchButton.UseVisualStyleBackColor = true;
+            this.cpcSearchButton.Click += new System.EventHandler(this.cpcSearchButton_Click);
+            // 
+            // cpcSearchTerm
+            // 
+            this.cpcSearchTerm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cpcSearchTerm.Location = new System.Drawing.Point(729, 456);
+            this.cpcSearchTerm.Name = "cpcSearchTerm";
+            this.cpcSearchTerm.Size = new System.Drawing.Size(143, 20);
+            this.cpcSearchTerm.TabIndex = 8;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(885, 617);
+            this.Controls.Add(this.cpcSearchTerm);
+            this.Controls.Add(this.cpcSearchButton);
+            this.Controls.Add(this.patPubTextBox);
+            this.Controls.Add(this.addUSButton);
+            this.Controls.Add(this.fetchDataGoogleButton);
             this.Controls.Add(this.pbNotRelevant);
             this.Controls.Add(this.pbMinimallyRelevant);
             this.Controls.Add(this.pbSomewhatRelevant);
@@ -389,6 +449,11 @@
         private System.Windows.Forms.RichTextBox itemAbstract;
         private System.Windows.Forms.Label itemTitle;
         private System.Windows.Forms.TabControl mainTabs;
+        private System.Windows.Forms.Button fetchDataGoogleButton;
+        private System.Windows.Forms.Button addUSButton;
+        private System.Windows.Forms.MaskedTextBox patPubTextBox;
+        private System.Windows.Forms.Button cpcSearchButton;
+        private System.Windows.Forms.TextBox cpcSearchTerm;
     }
 }
 

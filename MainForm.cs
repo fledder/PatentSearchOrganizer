@@ -21,10 +21,11 @@ namespace PatentSearchOrganizer
         {
             InitializeComponent();
             items = new ItemsHandler();
-            items.addItem("US Patent", "9876543", "https://example.com/9876543", "High");
+            items.addItem("US Patent", "6789012", "https://example.com/9876543", "High");
             items.selectItem(0);
             selectedItem = items.getSelectedItem();
             selectedItem.retrieveData("Google Patents", this.items.itemData);
+            selectedItem.retrieveReferences("Google Patents", this.items.itemData);
             selectedItem = items.getSelectedItem();
             refreshTree();
             refreshDisplays();
@@ -40,11 +41,17 @@ namespace PatentSearchOrganizer
             itemTitle.Text = selectedItem.getTitle();
             itemAbstract.Text = selectedItem.getAbstract();
             claimsWebBrowser.Navigate("about:blank");
+            claimsWebBrowser.Document.OpenNew(true);
             claimsWebBrowser.Document.Write(selectedItem.getClaims());
             Stream figureImageStream = new MemoryStream(selectedItem.getSelectedImage());
-            Image figureImage = Image.FromStream(figureImageStream);
-            figurePictureBox.Image = figureImage;
+            figurePictureBox.Image = null;
+            if(figureImageStream.Length > 0)
+            {
+                Image figureImage = Image.FromStream(figureImageStream);
+                figurePictureBox.Image = figureImage;
+            }
             specificationBrowser.Navigate("about:blank");
+            specificationBrowser.Document.OpenNew(true);
             specificationBrowser.Document.Write(selectedItem.getDescription());
         }
 
@@ -103,6 +110,46 @@ namespace PatentSearchOrganizer
             filePathDialog.ShowDialog();
             filePath = filePathDialog.FileName;
             items.load(filePath);
+        }
+
+        private void tree_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            string selectedIdentifier = tree.SelectedNode.Text;
+            items.selectItemByIdentifier(selectedIdentifier);
+            selectedItem = items.getSelectedItem();
+            refreshDisplays();
+        }
+
+        private void fetchDataGoogleButton_Click(object sender, EventArgs e)
+        {
+            selectedItem.retrieveData("Google Patents", items.itemData);
+            selectedItem = items.getSelectedItem();
+            refreshDisplays();
+        }
+
+        private void addUSButton_Click(object sender, EventArgs e)
+        {
+            string input = patPubTextBox.Text;
+            if(input.Length == 7)
+            {
+                items.addItem("US Patent", input, "", null);
+            }
+            else if(input.Length == 11)
+            {
+                items.addItem("US Publication", input, "", null);
+            }
+            refreshTree();
+            items.selectItemByIdentifier(input);
+            selectedItem = items.getSelectedItem();
+            selectedItem.retrieveData("Google Patents", items.itemData);
+            refreshDisplays();
+        }
+
+        private void cpcSearchButton_Click(object sender, EventArgs e)
+        {
+            string term = cpcSearchTerm.Text;
+            items.searchCPC("Google Patents", term);
+            refreshTree();
         }
     }
 }
