@@ -49,7 +49,7 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pbHighlyRelevant = new System.Windows.Forms.Button();
-            this.pbSomewhatRelevant = new System.Windows.Forms.Button();
+            this.pbModeratelyRelevant = new System.Windows.Forms.Button();
             this.pbMinimallyRelevant = new System.Windows.Forms.Button();
             this.pbNotRelevant = new System.Windows.Forms.Button();
             this.figures = new System.Windows.Forms.TabPage();
@@ -70,6 +70,8 @@
             this.patPubTextBox = new System.Windows.Forms.MaskedTextBox();
             this.cpcSearchButton = new System.Windows.Forms.Button();
             this.cpcSearchTerm = new System.Windows.Forms.TextBox();
+            this.notYetReviewedButton = new System.Windows.Forms.Button();
+            this.cbNonRelevant = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.figures.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.figurePictureBox)).BeginInit();
@@ -100,7 +102,7 @@
             treeNode7.Text = "9876543";
             this.tree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode7});
-            this.tree.Size = new System.Drawing.Size(183, 544);
+            this.tree.Size = new System.Drawing.Size(183, 521);
             this.tree.TabIndex = 0;
             this.tree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tree_AfterSelect);
             // 
@@ -155,42 +157,46 @@
             // pbHighlyRelevant
             // 
             this.pbHighlyRelevant.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbHighlyRelevant.Location = new System.Drawing.Point(729, 83);
+            this.pbHighlyRelevant.Location = new System.Drawing.Point(729, 116);
             this.pbHighlyRelevant.Name = "pbHighlyRelevant";
             this.pbHighlyRelevant.Size = new System.Drawing.Size(144, 27);
             this.pbHighlyRelevant.TabIndex = 3;
             this.pbHighlyRelevant.Text = "Highly Relevant";
             this.pbHighlyRelevant.UseVisualStyleBackColor = true;
+            this.pbHighlyRelevant.Click += new System.EventHandler(this.pbHighlyRelevant_Click);
             // 
-            // pbSomewhatRelevant
+            // pbModeratelyRelevant
             // 
-            this.pbSomewhatRelevant.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbSomewhatRelevant.Location = new System.Drawing.Point(729, 116);
-            this.pbSomewhatRelevant.Name = "pbSomewhatRelevant";
-            this.pbSomewhatRelevant.Size = new System.Drawing.Size(144, 27);
-            this.pbSomewhatRelevant.TabIndex = 3;
-            this.pbSomewhatRelevant.Text = "Somewhat Relevant";
-            this.pbSomewhatRelevant.UseVisualStyleBackColor = true;
+            this.pbModeratelyRelevant.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbModeratelyRelevant.Location = new System.Drawing.Point(729, 149);
+            this.pbModeratelyRelevant.Name = "pbModeratelyRelevant";
+            this.pbModeratelyRelevant.Size = new System.Drawing.Size(144, 27);
+            this.pbModeratelyRelevant.TabIndex = 3;
+            this.pbModeratelyRelevant.Text = "Moderately Relevant";
+            this.pbModeratelyRelevant.UseVisualStyleBackColor = true;
+            this.pbModeratelyRelevant.Click += new System.EventHandler(this.pbModeratelyRelevant_Click);
             // 
             // pbMinimallyRelevant
             // 
             this.pbMinimallyRelevant.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbMinimallyRelevant.Location = new System.Drawing.Point(729, 149);
+            this.pbMinimallyRelevant.Location = new System.Drawing.Point(729, 182);
             this.pbMinimallyRelevant.Name = "pbMinimallyRelevant";
             this.pbMinimallyRelevant.Size = new System.Drawing.Size(144, 27);
             this.pbMinimallyRelevant.TabIndex = 3;
             this.pbMinimallyRelevant.Text = "Minimally Relevant";
             this.pbMinimallyRelevant.UseVisualStyleBackColor = true;
+            this.pbMinimallyRelevant.Click += new System.EventHandler(this.pbMinimallyRelevant_Click);
             // 
             // pbNotRelevant
             // 
             this.pbNotRelevant.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbNotRelevant.Location = new System.Drawing.Point(729, 182);
+            this.pbNotRelevant.Location = new System.Drawing.Point(729, 215);
             this.pbNotRelevant.Name = "pbNotRelevant";
             this.pbNotRelevant.Size = new System.Drawing.Size(144, 27);
             this.pbNotRelevant.TabIndex = 3;
             this.pbNotRelevant.Text = "Not Relevant (Suppress)";
             this.pbNotRelevant.UseVisualStyleBackColor = true;
+            this.pbNotRelevant.Click += new System.EventHandler(this.pbNotRelevant_Click);
             // 
             // figures
             // 
@@ -345,7 +351,7 @@
             // fetchDataGoogleButton
             // 
             this.fetchDataGoogleButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.fetchDataGoogleButton.Location = new System.Drawing.Point(729, 233);
+            this.fetchDataGoogleButton.Location = new System.Drawing.Point(729, 274);
             this.fetchDataGoogleButton.Name = "fetchDataGoogleButton";
             this.fetchDataGoogleButton.Size = new System.Drawing.Size(144, 27);
             this.fetchDataGoogleButton.TabIndex = 4;
@@ -366,6 +372,7 @@
             // 
             // patPubTextBox
             // 
+            this.patPubTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.patPubTextBox.Location = new System.Drawing.Point(725, 317);
             this.patPubTextBox.Mask = "00000000000";
             this.patPubTextBox.Name = "patPubTextBox";
@@ -391,11 +398,34 @@
             this.cpcSearchTerm.Size = new System.Drawing.Size(143, 20);
             this.cpcSearchTerm.TabIndex = 8;
             // 
+            // notYetReviewedButton
+            // 
+            this.notYetReviewedButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.notYetReviewedButton.Location = new System.Drawing.Point(729, 83);
+            this.notYetReviewedButton.Name = "notYetReviewedButton";
+            this.notYetReviewedButton.Size = new System.Drawing.Size(144, 27);
+            this.notYetReviewedButton.TabIndex = 3;
+            this.notYetReviewedButton.Text = "Not Yet Reviewed";
+            this.notYetReviewedButton.UseVisualStyleBackColor = true;
+            this.notYetReviewedButton.Click += new System.EventHandler(this.notYetReviewedButton_Click);
+            // 
+            // cbNonRelevant
+            // 
+            this.cbNonRelevant.AutoSize = true;
+            this.cbNonRelevant.Location = new System.Drawing.Point(12, 588);
+            this.cbNonRelevant.Name = "cbNonRelevant";
+            this.cbNonRelevant.Size = new System.Drawing.Size(122, 17);
+            this.cbNonRelevant.TabIndex = 9;
+            this.cbNonRelevant.Text = "Show Non-Relevant";
+            this.cbNonRelevant.UseVisualStyleBackColor = true;
+            this.cbNonRelevant.CheckedChanged += new System.EventHandler(this.cbNonRelevant_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(885, 617);
+            this.Controls.Add(this.cbNonRelevant);
             this.Controls.Add(this.cpcSearchTerm);
             this.Controls.Add(this.cpcSearchButton);
             this.Controls.Add(this.patPubTextBox);
@@ -403,7 +433,8 @@
             this.Controls.Add(this.fetchDataGoogleButton);
             this.Controls.Add(this.pbNotRelevant);
             this.Controls.Add(this.pbMinimallyRelevant);
-            this.Controls.Add(this.pbSomewhatRelevant);
+            this.Controls.Add(this.pbModeratelyRelevant);
+            this.Controls.Add(this.notYetReviewedButton);
             this.Controls.Add(this.pbHighlyRelevant);
             this.Controls.Add(this.mainTabs);
             this.Controls.Add(this.tree);
@@ -430,7 +461,7 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.Button pbHighlyRelevant;
-        private System.Windows.Forms.Button pbSomewhatRelevant;
+        private System.Windows.Forms.Button pbModeratelyRelevant;
         private System.Windows.Forms.Button pbMinimallyRelevant;
         private System.Windows.Forms.Button pbNotRelevant;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
@@ -454,6 +485,8 @@
         private System.Windows.Forms.MaskedTextBox patPubTextBox;
         private System.Windows.Forms.Button cpcSearchButton;
         private System.Windows.Forms.TextBox cpcSearchTerm;
+        private System.Windows.Forms.Button notYetReviewedButton;
+        private System.Windows.Forms.CheckBox cbNonRelevant;
     }
 }
 

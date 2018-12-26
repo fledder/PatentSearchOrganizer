@@ -512,7 +512,7 @@ namespace PatentSearchOrganizer {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public itemsRow AdditemsRow(string type, string identifier, string fetchLink, string relevance) {
+            public itemsRow AdditemsRow(string type, string identifier, string fetchLink, int relevance) {
                 itemsRow rowitemsRow = ((itemsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -560,7 +560,7 @@ namespace PatentSearchOrganizer {
                 base.Columns.Add(this.columnidentifier);
                 this.columnfetchLink = new global::System.Data.DataColumn("fetchLink", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnfetchLink);
-                this.columnrelevance = new global::System.Data.DataColumn("relevance", typeof(string), null, global::System.Data.MappingType.Element);
+                this.columnrelevance = new global::System.Data.DataColumn("relevance", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnrelevance);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, false));
@@ -570,6 +570,8 @@ namespace PatentSearchOrganizer {
                 this.columnid.Unique = true;
                 this.columntype.AllowDBNull = false;
                 this.columnidentifier.AllowDBNull = false;
+                this.columnrelevance.AllowDBNull = false;
+                this.columnrelevance.DefaultValue = ((int)(100));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1353,14 +1355,9 @@ namespace PatentSearchOrganizer {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string relevance {
+            public int relevance {
                 get {
-                    try {
-                        return ((string)(this[this.tableitems.relevanceColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'relevance\' in table \'items\' is DBNull.", e);
-                    }
+                    return ((int)(this[this.tableitems.relevanceColumn]));
                 }
                 set {
                     this[this.tableitems.relevanceColumn] = value;
@@ -1377,18 +1374,6 @@ namespace PatentSearchOrganizer {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetfetchLinkNull() {
                 this[this.tableitems.fetchLinkColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsrelevanceNull() {
-                return this.IsNull(this.tableitems.relevanceColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetrelevanceNull() {
-                this[this.tableitems.relevanceColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

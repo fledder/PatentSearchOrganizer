@@ -16,12 +16,14 @@ namespace PatentSearchOrganizer
         private ItemsHandler items;
         private Item selectedItem;
         private string filePath;
+        private bool showNotRelevant;
 
         public MainForm()
         {
             InitializeComponent();
+            showNotRelevant = false;
             items = new ItemsHandler();
-            items.addItem("US Patent", "6789012", "https://example.com/9876543", "High");
+            items.addItem("US Patent", "6789012", "https://example.com/9876543", Relevance.High);
             items.selectItem(0);
             selectedItem = items.getSelectedItem();
             selectedItem.retrieveData("Google Patents", this.items.itemData);
@@ -33,7 +35,7 @@ namespace PatentSearchOrganizer
 
         public void refreshTree()
         {
-            items.updateTreeData(tree);
+            items.updateTreeData(tree, showNotRelevant);
         }
 
         public void refreshDisplays()
@@ -132,11 +134,11 @@ namespace PatentSearchOrganizer
             string input = patPubTextBox.Text;
             if(input.Length == 7)
             {
-                items.addItem("US Patent", input, "", null);
+                items.addItem("US Patent", input, "", Relevance.Unreviewed);
             }
             else if(input.Length == 11)
             {
-                items.addItem("US Publication", input, "", null);
+                items.addItem("US Publication", input, "", Relevance.Unreviewed);
             }
             refreshTree();
             items.selectItemByIdentifier(input);
@@ -149,6 +151,42 @@ namespace PatentSearchOrganizer
         {
             string term = cpcSearchTerm.Text;
             items.searchCPC("Google Patents", term);
+            refreshTree();
+        }
+
+        private void pbHighlyRelevant_Click(object sender, EventArgs e)
+        {
+            selectedItem.setRelevance(Relevance.High, items.itemData);
+            refreshTree();
+        }
+
+        private void notYetReviewedButton_Click(object sender, EventArgs e)
+        {
+            selectedItem.setRelevance(Relevance.Unreviewed, items.itemData);
+            refreshTree();
+        }
+
+        private void pbModeratelyRelevant_Click(object sender, EventArgs e)
+        {
+            selectedItem.setRelevance(Relevance.Moderate, items.itemData);
+            refreshTree();
+        }
+
+        private void pbMinimallyRelevant_Click(object sender, EventArgs e)
+        {
+            selectedItem.setRelevance(Relevance.Minimal, items.itemData);
+            refreshTree();
+        }
+
+        private void pbNotRelevant_Click(object sender, EventArgs e)
+        {
+            selectedItem.setRelevance(Relevance.None, items.itemData);
+            refreshTree();
+        }
+
+        private void cbNonRelevant_CheckedChanged(object sender, EventArgs e)
+        {
+            showNotRelevant = cbNonRelevant.Checked;
             refreshTree();
         }
     }

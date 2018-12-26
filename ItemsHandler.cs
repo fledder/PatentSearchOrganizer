@@ -13,6 +13,7 @@ using Newtonsoft.Json.Linq;
 
 namespace PatentSearchOrganizer
 {
+    public enum Relevance { None = 0, Minimal = 10, Moderate = 20, High = 30, Unreviewed = 100};
     class ItemsHandler
     {
         public ItemDataset itemData;
@@ -40,13 +41,13 @@ namespace PatentSearchOrganizer
             selectedItemID = -1;
         }
 
-        public void addItem(string type, string identifier, string fetchLink, string relevance)
+        public void addItem(string type, string identifier, string fetchLink, Relevance relevance)
         {
             DataRow r = itemData.Tables["items"].NewRow();
             r["type"] = type;
             r["identifier"] = identifier;
             r["fetchLink"] = fetchLink;
-            r["relevance"] = relevance;
+            r["relevance"] = (int)relevance;
             itemData.Tables["items"].Rows.Add(r);
             r.AcceptChanges();
         }
@@ -78,13 +79,40 @@ namespace PatentSearchOrganizer
             itemData.ReadXml(filePath);
         }
 
-        public void updateTreeData(System.Windows.Forms.TreeView tree)
+        public void updateTreeData(System.Windows.Forms.TreeView tree, bool showNotRelevant)
         {
             tree.Nodes.Clear();
-            EnumerableRowCollection<ItemDataset.itemsRow> lines = from item in itemData.items select item;
+            EnumerableRowCollection<ItemDataset.itemsRow> lines =  from item in itemData.items where item.relevance > (int)Relevance.None orderby item.relevance descending select item;
+            if (showNotRelevant)
+            {
+                lines = from item in itemData.items orderby item.relevance descending select item;
+            }
             foreach(ItemDataset.itemsRow row in lines)
             {
                 System.Windows.Forms.TreeNode parentNode = tree.Nodes.Add(row.id.ToString(), row.identifier);
+                switch ((Relevance)row.relevance)
+                {
+                    case Relevance.Unreviewed:
+                        parentNode.BackColor = System.Drawing.Color.Black;
+                        parentNode.ForeColor = System.Drawing.Color.White;
+                        break;
+                    case Relevance.High:
+                        parentNode.BackColor = System.Drawing.Color.DarkRed;
+                        parentNode.ForeColor = System.Drawing.Color.White;
+                        break;
+                    case Relevance.Moderate:
+                        parentNode.BackColor = System.Drawing.Color.Yellow;
+                        parentNode.ForeColor = System.Drawing.Color.Black;
+                        break;
+                    case Relevance.Minimal:
+                        parentNode.BackColor = System.Drawing.Color.DarkBlue;
+                        parentNode.ForeColor = System.Drawing.Color.White;
+                        break;
+                    case Relevance.None:
+                        parentNode.BackColor = System.Drawing.Color.DarkGray;
+                        parentNode.ForeColor = System.Drawing.Color.LightGray;
+                        break;
+                }
                 parentNode.Nodes.Add("References");
                 parentNode.Nodes.Add("Referenced By");
             }
@@ -94,12 +122,73 @@ namespace PatentSearchOrganizer
         {
             if(dataSource == "Google Patents")
             {
-                string url = "https://patents.google.com/xhr/query?url=q%3Dcpc%253d" + WebUtility.UrlEncode(searchTerm);
+                void parseResult(JObject result)
+                {
+                    JToken cluster = result.SelectToken("results.cluster[0]").Children().First();
+                    JToken resultItemList = cluster.Children().First();
+                    foreach (JToken resultItem in resultItemList)
+                    {
+                        string resultIdentifier = resultItem.SelectToken("patent.publication_number").ToString();
+                        EnumerableRowCollection<int> existingResults = from item in itemData.items where item.identifier == resultIdentifier select item.id;
+                        if (existingResults.Count() == 0)
+                        {
+                            Regex patnoRx = new Regex(@"US(\d{7})[A-Z]?\d?$");
+                            Match patMatch = patnoRx.Match(resultIdentifier);
+                            string refIdentifier = "";
+                            string refType = "";
+                            if (patMatch.Success)
+                            {
+                                refType = "US Patent";
+                                refIdentifier = patMatch.Groups[1].Value;
+                            }
+                            else
+                            {
+                                Regex pubnoRx = new Regex(@"US(\d{11})[A-Z]?\d?$");
+                                Match pubMatch = pubnoRx.Match(resultIdentifier);
+                                if (pubMatch.Success)
+                                {
+                                    refType = "US Publication";
+                                    refIdentifier = pubMatch.Groups[1].Value;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                            DataRow newRow = itemData.Tables["items"].NewRow();
+                            newRow["identifier"] = refIdentifier;
+                            newRow["type"] = refType;
+                            itemData.Tables["items"].Rows.Add(newRow);
+                            itemData.Tables["items"].AcceptChanges();
+                            int newID = (from item in itemData.items where item.identifier == refIdentifier select item.id).First();
+                            itemData.addItemComponent(newID, "Title", resultItem.SelectToken("patent.title").ToString());
+                        }
+                    }
+                }
+
+                string getURL(string term, int page)
+                {
+                    return "https://patents.google.com/xhr/query?url=q%3Dcpc%253d" + WebUtility.UrlEncode(term) + "%26num%3D100%26page%3D" + page;
+                }
+
+                int currentPage = 0;
+                string url = getURL(searchTerm, currentPage);
                 using (WebClient client = new WebClient())
                 {
-                    string resultString = client.DownloadString(url);
-                    JObject result = JObject.Parse(resultString);
-                    JToken cluster = result.SelectToken("results.cluster[0]").Children().First();
+                    string retrievedString = client.DownloadString(url);
+                    JObject result = JObject.Parse(retrievedString);
+                    int numPages = int.Parse(result.SelectToken("results.total_num_pages").ToString());
+                    parseResult(result);
+                    if (numPages > 1)
+                    {
+                        for (currentPage = 1; currentPage < numPages; currentPage++)
+                        {
+                            url = getURL(searchTerm, currentPage);
+                            retrievedString = client.DownloadString(url);
+                            result = JObject.Parse(retrievedString);
+                            parseResult(result);
+                        }
+                    }
                 }
             }
         }
@@ -115,6 +204,7 @@ namespace PatentSearchOrganizer
         private List<byte[]> images;
         private int selectedImage;
         private string fetchLink;
+        private Relevance relevance;
 
         //Getters, setters, selectors
         public string getTitle()
@@ -177,6 +267,11 @@ namespace PatentSearchOrganizer
             selectedImage = images.Count - 1;
         }
 
+        public Relevance getRelevance()
+        {
+            return relevance;
+        }
+
         public Item(Int32 id)
         {
             this.id = id;
@@ -237,9 +332,12 @@ namespace PatentSearchOrganizer
                 
                 //get the text sections from their xpaths
                 string titleXpath = "/html/body/search-app/article/span";
-                title = hdoc.DocumentNode.SelectSingleNode(titleXpath).InnerHtml;
-                itemData.addItemComponent(id, "Title", title);
-
+                HtmlNode titleNode = hdoc.DocumentNode.SelectSingleNode(titleXpath);
+                if(titleNode != null)
+                {
+                    title = titleNode.InnerHtml;
+                    itemData.addItemComponent(id, "Title", title);
+                }
                 string abstractXpath = "/html/body/search-app/article/section[3]/div/abstract/div";
                 HtmlNode abstractNode = hdoc.DocumentNode.SelectSingleNode(abstractXpath);
                 if(abstractNode != null)
@@ -249,8 +347,12 @@ namespace PatentSearchOrganizer
                 }
                 
                 string descriptionXpath = "/html/body/search-app/article/section[4]/div/div";
-                description = hdoc.DocumentNode.SelectSingleNode(descriptionXpath).InnerHtml;
-                itemData.addItemComponent(id, "Description", description);
+                HtmlNode descriptionNode = hdoc.DocumentNode.SelectSingleNode(descriptionXpath);
+                if (descriptionNode != null)
+                {
+                    description = descriptionNode.InnerHtml;
+                    itemData.addItemComponent(id, "Description", description);
+                }
 
                 string claimsXpath = "/html/body/search-app/article/section[5]/div/div";
                 HtmlNode claimsNode = hdoc.DocumentNode.SelectSingleNode(claimsXpath);
@@ -410,6 +512,14 @@ namespace PatentSearchOrganizer
                     images.Add(row.componentData);
                 }
             }
+        }
+
+        public void setRelevance(Relevance relevanceInput, ItemDataset dataset)
+        {
+            relevance = relevanceInput;
+            DataRow updateRow = dataset.Tables["items"].Select("id = " + id).First();
+            updateRow["relevance"] = (int)relevanceInput;
+            updateRow.AcceptChanges();
         }
     }
 }
