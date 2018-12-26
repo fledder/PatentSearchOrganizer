@@ -192,6 +192,18 @@ namespace PatentSearchOrganizer
                 }
             }
         }
+
+        public void fetchAll(string dataSource)
+        {
+            foreach(DataRow row in itemData.Tables["items"].Rows)
+            {
+                if(row["fetchLink"] == null || row["fetchLink"].ToString() == "")
+                {
+                    Item item = new Item((int)row["id"]);
+                    item.retrieveData("Google Patents", itemData);
+                }
+            }
+        }
     }
 
     class Item
@@ -205,6 +217,7 @@ namespace PatentSearchOrganizer
         private int selectedImage;
         private string fetchLink;
         private Relevance relevance;
+        private string notes;
 
         //Getters, setters, selectors
         public string getTitle()
@@ -272,6 +285,11 @@ namespace PatentSearchOrganizer
             return relevance;
         }
 
+        public string getNotes()
+        {
+            return notes ?? "";
+        }
+
         public Item(Int32 id)
         {
             this.id = id;
@@ -297,6 +315,9 @@ namespace PatentSearchOrganizer
                 itemData.AcceptChanges();
 
                 fetchLink = "https://patents.google.com/patent/US" + identifier;
+                DataRow itemRow = itemData.Tables["items"].Select("id = " + id).First();
+                itemRow["fetchLink"] = fetchLink;
+                itemRow.AcceptChanges();
 
                 //get the document from google. this will not be the same as the one
                 //rendered for a normal web browser
@@ -512,6 +533,18 @@ namespace PatentSearchOrganizer
                     images.Add(row.componentData);
                 }
             }
+
+            ItemDataset.itemsRow itemRow = (from item in itemData.items where item.id == id select item).First();
+            if(itemRow["notes"] != null)
+            {
+                notes = itemRow["notes"].ToString();
+            }
+            else
+            {
+                notes = "";
+            }
+            //EnumerableRowCollection<string> itemNotes = from item in itemData.items where item.id == id select item.notes;
+            //notes = itemNotes.First() ?? "";
         }
 
         public void setRelevance(Relevance relevanceInput, ItemDataset dataset)
@@ -519,6 +552,14 @@ namespace PatentSearchOrganizer
             relevance = relevanceInput;
             DataRow updateRow = dataset.Tables["items"].Select("id = " + id).First();
             updateRow["relevance"] = (int)relevanceInput;
+            updateRow.AcceptChanges();
+        }
+
+        public void setNotes(string notesInput, ItemDataset dataset)
+        {
+            notes = notesInput;
+            DataRow updateRow = dataset.Tables["items"].Select("id = " + id).First();
+            updateRow["notes"] = notesInput;
             updateRow.AcceptChanges();
         }
     }

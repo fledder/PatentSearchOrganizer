@@ -402,6 +402,8 @@ namespace PatentSearchOrganizer {
             
             private global::System.Data.DataColumn columnrelevance;
             
+            private global::System.Data.DataColumn columnnotes;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public itemsDataTable() {
@@ -477,6 +479,14 @@ namespace PatentSearchOrganizer {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn notesColumn {
+                get {
+                    return this.columnnotes;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -512,14 +522,15 @@ namespace PatentSearchOrganizer {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public itemsRow AdditemsRow(string type, string identifier, string fetchLink, int relevance) {
+            public itemsRow AdditemsRow(string type, string identifier, string fetchLink, int relevance, string notes) {
                 itemsRow rowitemsRow = ((itemsRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         type,
                         identifier,
                         fetchLink,
-                        relevance};
+                        relevance,
+                        notes};
                 rowitemsRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowitemsRow);
                 return rowitemsRow;
@@ -547,6 +558,7 @@ namespace PatentSearchOrganizer {
                 this.columnidentifier = base.Columns["identifier"];
                 this.columnfetchLink = base.Columns["fetchLink"];
                 this.columnrelevance = base.Columns["relevance"];
+                this.columnnotes = base.Columns["notes"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -562,6 +574,8 @@ namespace PatentSearchOrganizer {
                 base.Columns.Add(this.columnfetchLink);
                 this.columnrelevance = new global::System.Data.DataColumn("relevance", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnrelevance);
+                this.columnnotes = new global::System.Data.DataColumn("notes", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnnotes);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnid}, false));
                 this.columnid.AutoIncrement = true;
@@ -1366,6 +1380,22 @@ namespace PatentSearchOrganizer {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string notes {
+                get {
+                    try {
+                        return ((string)(this[this.tableitems.notesColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'notes\' in table \'items\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableitems.notesColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsfetchLinkNull() {
                 return this.IsNull(this.tableitems.fetchLinkColumn);
             }
@@ -1374,6 +1404,18 @@ namespace PatentSearchOrganizer {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetfetchLinkNull() {
                 this[this.tableitems.fetchLinkColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsnotesNull() {
+                return this.IsNull(this.tableitems.notesColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetnotesNull() {
+                this[this.tableitems.notesColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

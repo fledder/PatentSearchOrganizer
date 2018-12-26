@@ -20,6 +20,7 @@
               <xs:element name="identifier" msprop:Generator_ColumnVarNameInTable="columnidentifier" msprop:Generator_ColumnPropNameInRow="identifier" msprop:Generator_ColumnPropNameInTable="identifierColumn" msprop:Generator_UserColumnName="identifier" type="xs:string" />
               <xs:element name="fetchLink" msprop:Generator_ColumnVarNameInTable="columnfetchLink" msprop:Generator_ColumnPropNameInRow="fetchLink" msprop:Generator_ColumnPropNameInTable="fetchLinkColumn" msprop:Generator_UserColumnName="fetchLink" type="xs:string" minOccurs="0" />
               <xs:element name="relevance" msprop:Generator_ColumnVarNameInTable="columnrelevance" msprop:Generator_ColumnPropNameInRow="relevance" msprop:Generator_ColumnPropNameInTable="relevanceColumn" msprop:Generator_UserColumnName="relevance" type="xs:int" default="100" />
+              <xs:element name="notes" msprop:Generator_ColumnVarNameInTable="columnnotes" msprop:Generator_ColumnPropNameInRow="notes" msprop:Generator_ColumnPropNameInTable="notesColumn" msprop:Generator_UserColumnName="notes" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

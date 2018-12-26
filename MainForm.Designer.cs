@@ -28,19 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("8765432");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("8776543");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("References", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2});
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("9987654");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("9988765");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Referenced By", new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode5});
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("9876543", new System.Windows.Forms.TreeNode[] {
-            treeNode3,
-            treeNode6});
+            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("8765432");
+            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("8776543");
+            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("References", new System.Windows.Forms.TreeNode[] {
+            treeNode15,
+            treeNode16});
+            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("9987654");
+            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("9988765");
+            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("Referenced By", new System.Windows.Forms.TreeNode[] {
+            treeNode18,
+            treeNode19});
+            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("9876543", new System.Windows.Forms.TreeNode[] {
+            treeNode17,
+            treeNode20});
             this.tree = new System.Windows.Forms.TreeView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,6 +72,10 @@
             this.cpcSearchTerm = new System.Windows.Forms.TextBox();
             this.notYetReviewedButton = new System.Windows.Forms.Button();
             this.cbNonRelevant = new System.Windows.Forms.CheckBox();
+            this.pbFetchAllGoogle = new System.Windows.Forms.Button();
+            this.rtbNotes = new System.Windows.Forms.RichTextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.pbSave = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.figures.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.figurePictureBox)).BeginInit();
@@ -86,22 +90,22 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.tree.Location = new System.Drawing.Point(12, 61);
             this.tree.Name = "tree";
-            treeNode1.Name = "8765432";
-            treeNode1.Text = "8765432";
-            treeNode2.Name = "8776543";
-            treeNode2.Text = "8776543";
-            treeNode3.Name = "References";
-            treeNode3.Text = "References";
-            treeNode4.Name = "9987654";
-            treeNode4.Text = "9987654";
-            treeNode5.Name = "9988765";
-            treeNode5.Text = "9988765";
-            treeNode6.Name = "Referenced By";
-            treeNode6.Text = "Referenced By";
-            treeNode7.Name = "9876543";
-            treeNode7.Text = "9876543";
+            treeNode15.Name = "8765432";
+            treeNode15.Text = "8765432";
+            treeNode16.Name = "8776543";
+            treeNode16.Text = "8776543";
+            treeNode17.Name = "References";
+            treeNode17.Text = "References";
+            treeNode18.Name = "9987654";
+            treeNode18.Text = "9987654";
+            treeNode19.Name = "9988765";
+            treeNode19.Text = "9988765";
+            treeNode20.Name = "Referenced By";
+            treeNode20.Text = "Referenced By";
+            treeNode21.Name = "9876543";
+            treeNode21.Text = "9876543";
             this.tree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode7});
+            treeNode21});
             this.tree.Size = new System.Drawing.Size(183, 521);
             this.tree.TabIndex = 0;
             this.tree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tree_AfterSelect);
@@ -297,7 +301,7 @@
             this.briefData.Location = new System.Drawing.Point(4, 22);
             this.briefData.Name = "briefData";
             this.briefData.Padding = new System.Windows.Forms.Padding(3);
-            this.briefData.Size = new System.Drawing.Size(514, 518);
+            this.briefData.Size = new System.Drawing.Size(514, 393);
             this.briefData.TabIndex = 0;
             this.briefData.Text = "Brief Overview";
             this.briefData.UseVisualStyleBackColor = true;
@@ -305,10 +309,13 @@
             // claimsWebBrowser
             // 
             this.claimsWebBrowser.AllowNavigation = false;
-            this.claimsWebBrowser.Location = new System.Drawing.Point(7, 172);
+            this.claimsWebBrowser.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.claimsWebBrowser.Location = new System.Drawing.Point(7, 191);
             this.claimsWebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.claimsWebBrowser.Name = "claimsWebBrowser";
-            this.claimsWebBrowser.Size = new System.Drawing.Size(501, 343);
+            this.claimsWebBrowser.Size = new System.Drawing.Size(501, 199);
             this.claimsWebBrowser.TabIndex = 2;
             // 
             // itemAbstract
@@ -316,7 +323,7 @@
             this.itemAbstract.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.itemAbstract.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.itemAbstract.Location = new System.Drawing.Point(7, 46);
+            this.itemAbstract.Location = new System.Drawing.Point(7, 66);
             this.itemAbstract.Name = "itemAbstract";
             this.itemAbstract.Size = new System.Drawing.Size(501, 120);
             this.itemAbstract.TabIndex = 1;
@@ -329,7 +336,7 @@
             this.itemTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
             this.itemTitle.Location = new System.Drawing.Point(3, 3);
             this.itemTitle.Name = "itemTitle";
-            this.itemTitle.Size = new System.Drawing.Size(505, 40);
+            this.itemTitle.Size = new System.Drawing.Size(505, 57);
             this.itemTitle.TabIndex = 0;
             this.itemTitle.Text = "Title of the Item";
             this.itemTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -345,7 +352,7 @@
             this.mainTabs.Location = new System.Drawing.Point(201, 61);
             this.mainTabs.Name = "mainTabs";
             this.mainTabs.SelectedIndex = 0;
-            this.mainTabs.Size = new System.Drawing.Size(522, 544);
+            this.mainTabs.Size = new System.Drawing.Size(522, 419);
             this.mainTabs.TabIndex = 2;
             // 
             // fetchDataGoogleButton
@@ -362,7 +369,7 @@
             // addUSButton
             // 
             this.addUSButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.addUSButton.Location = new System.Drawing.Point(729, 343);
+            this.addUSButton.Location = new System.Drawing.Point(729, 409);
             this.addUSButton.Name = "addUSButton";
             this.addUSButton.Size = new System.Drawing.Size(144, 27);
             this.addUSButton.TabIndex = 5;
@@ -373,7 +380,7 @@
             // patPubTextBox
             // 
             this.patPubTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.patPubTextBox.Location = new System.Drawing.Point(725, 317);
+            this.patPubTextBox.Location = new System.Drawing.Point(725, 383);
             this.patPubTextBox.Mask = "00000000000";
             this.patPubTextBox.Name = "patPubTextBox";
             this.patPubTextBox.Size = new System.Drawing.Size(148, 20);
@@ -382,7 +389,7 @@
             // cpcSearchButton
             // 
             this.cpcSearchButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cpcSearchButton.Location = new System.Drawing.Point(729, 482);
+            this.cpcSearchButton.Location = new System.Drawing.Point(729, 548);
             this.cpcSearchButton.Name = "cpcSearchButton";
             this.cpcSearchButton.Size = new System.Drawing.Size(144, 27);
             this.cpcSearchButton.TabIndex = 7;
@@ -393,7 +400,7 @@
             // cpcSearchTerm
             // 
             this.cpcSearchTerm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cpcSearchTerm.Location = new System.Drawing.Point(729, 456);
+            this.cpcSearchTerm.Location = new System.Drawing.Point(729, 522);
             this.cpcSearchTerm.Name = "cpcSearchTerm";
             this.cpcSearchTerm.Size = new System.Drawing.Size(143, 20);
             this.cpcSearchTerm.TabIndex = 8;
@@ -411,6 +418,7 @@
             // 
             // cbNonRelevant
             // 
+            this.cbNonRelevant.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbNonRelevant.AutoSize = true;
             this.cbNonRelevant.Location = new System.Drawing.Point(12, 588);
             this.cbNonRelevant.Name = "cbNonRelevant";
@@ -420,11 +428,57 @@
             this.cbNonRelevant.UseVisualStyleBackColor = true;
             this.cbNonRelevant.CheckedChanged += new System.EventHandler(this.cbNonRelevant_CheckedChanged);
             // 
+            // pbFetchAllGoogle
+            // 
+            this.pbFetchAllGoogle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbFetchAllGoogle.Location = new System.Drawing.Point(729, 307);
+            this.pbFetchAllGoogle.Name = "pbFetchAllGoogle";
+            this.pbFetchAllGoogle.Size = new System.Drawing.Size(144, 27);
+            this.pbFetchAllGoogle.TabIndex = 10;
+            this.pbFetchAllGoogle.Text = "Fetch All (Google)";
+            this.pbFetchAllGoogle.UseVisualStyleBackColor = true;
+            this.pbFetchAllGoogle.Click += new System.EventHandler(this.pbFetchAllGoogle_Click);
+            // 
+            // rtbNotes
+            // 
+            this.rtbNotes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtbNotes.Location = new System.Drawing.Point(205, 510);
+            this.rtbNotes.Name = "rtbNotes";
+            this.rtbNotes.Size = new System.Drawing.Size(452, 72);
+            this.rtbNotes.TabIndex = 11;
+            this.rtbNotes.Text = "";
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(205, 491);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 12;
+            this.label1.Text = "Notes";
+            // 
+            // pbSave
+            // 
+            this.pbSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbSave.Location = new System.Drawing.Point(663, 510);
+            this.pbSave.Name = "pbSave";
+            this.pbSave.Size = new System.Drawing.Size(56, 72);
+            this.pbSave.TabIndex = 13;
+            this.pbSave.Text = "Save";
+            this.pbSave.UseVisualStyleBackColor = true;
+            this.pbSave.Click += new System.EventHandler(this.pbSave_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(885, 617);
+            this.Controls.Add(this.pbSave);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.rtbNotes);
+            this.Controls.Add(this.pbFetchAllGoogle);
             this.Controls.Add(this.cbNonRelevant);
             this.Controls.Add(this.cpcSearchTerm);
             this.Controls.Add(this.cpcSearchButton);
@@ -487,6 +541,10 @@
         private System.Windows.Forms.TextBox cpcSearchTerm;
         private System.Windows.Forms.Button notYetReviewedButton;
         private System.Windows.Forms.CheckBox cbNonRelevant;
+        private System.Windows.Forms.Button pbFetchAllGoogle;
+        private System.Windows.Forms.RichTextBox rtbNotes;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button pbSave;
     }
 }
 

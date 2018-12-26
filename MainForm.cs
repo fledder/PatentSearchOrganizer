@@ -23,12 +23,13 @@ namespace PatentSearchOrganizer
             InitializeComponent();
             showNotRelevant = false;
             items = new ItemsHandler();
-            items.addItem("US Patent", "6789012", "https://example.com/9876543", Relevance.High);
-            items.selectItem(0);
-            selectedItem = items.getSelectedItem();
-            selectedItem.retrieveData("Google Patents", this.items.itemData);
-            selectedItem.retrieveReferences("Google Patents", this.items.itemData);
-            selectedItem = items.getSelectedItem();
+            //items.addItem("US Patent", "6789012", "https://example.com/9876543", Relevance.High);
+            //items.selectItem(0);
+            //selectedItem = items.getSelectedItem();
+            //selectedItem.retrieveData("Google Patents", this.items.itemData);
+            //selectedItem.retrieveReferences("Google Patents", this.items.itemData);
+            //selectedItem = items.getSelectedItem();
+            selectedItem = null;
             refreshTree();
             refreshDisplays();
         }
@@ -40,21 +41,25 @@ namespace PatentSearchOrganizer
 
         public void refreshDisplays()
         {
-            itemTitle.Text = selectedItem.getTitle();
-            itemAbstract.Text = selectedItem.getAbstract();
-            claimsWebBrowser.Navigate("about:blank");
-            claimsWebBrowser.Document.OpenNew(true);
-            claimsWebBrowser.Document.Write(selectedItem.getClaims());
-            Stream figureImageStream = new MemoryStream(selectedItem.getSelectedImage());
-            figurePictureBox.Image = null;
-            if(figureImageStream.Length > 0)
+            if(selectedItem != null)
             {
-                Image figureImage = Image.FromStream(figureImageStream);
-                figurePictureBox.Image = figureImage;
+                itemTitle.Text = selectedItem.getTitle();
+                itemAbstract.Text = selectedItem.getAbstract();
+                claimsWebBrowser.Navigate("about:blank");
+                claimsWebBrowser.Document.OpenNew(true);
+                claimsWebBrowser.Document.Write(selectedItem.getClaims());
+                Stream figureImageStream = new MemoryStream(selectedItem.getSelectedImage());
+                figurePictureBox.Image = null;
+                if (figureImageStream.Length > 0)
+                {
+                    Image figureImage = Image.FromStream(figureImageStream);
+                    figurePictureBox.Image = figureImage;
+                }
+                specificationBrowser.Navigate("about:blank");
+                specificationBrowser.Document.OpenNew(true);
+                specificationBrowser.Document.Write(selectedItem.getDescription());
+                rtbNotes.Text = selectedItem.getNotes();
             }
-            specificationBrowser.Navigate("about:blank");
-            specificationBrowser.Document.OpenNew(true);
-            specificationBrowser.Document.Write(selectedItem.getDescription());
         }
 
         private void firstImageButton_Click(object sender, EventArgs e)
@@ -112,6 +117,7 @@ namespace PatentSearchOrganizer
             filePathDialog.ShowDialog();
             filePath = filePathDialog.FileName;
             items.load(filePath);
+            refreshTree();
         }
 
         private void tree_AfterSelect(object sender, TreeViewEventArgs e)
@@ -188,6 +194,19 @@ namespace PatentSearchOrganizer
         {
             showNotRelevant = cbNonRelevant.Checked;
             refreshTree();
+        }
+
+        private void pbFetchAllGoogle_Click(object sender, EventArgs e)
+        {
+            items.fetchAll("Google Patents");
+            refreshDisplays();
+            refreshTree();
+        }
+
+        private void pbSave_Click(object sender, EventArgs e)
+        {
+            selectedItem.setNotes(rtbNotes.Text, items.itemData);
+            refreshDisplays();
         }
     }
 }
