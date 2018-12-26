@@ -132,7 +132,7 @@ namespace PatentSearchOrganizer
                         EnumerableRowCollection<int> existingResults = from item in itemData.items where item.identifier == resultIdentifier select item.id;
                         if (existingResults.Count() == 0)
                         {
-                            Regex patnoRx = new Regex(@"US(\d{7})[A-Z]?\d?$");
+                            Regex patnoRx = new Regex(@"US(\d{7,8})[A-Z]?\d?$");
                             Match patMatch = patnoRx.Match(resultIdentifier);
                             string refIdentifier = "";
                             string refType = "";
@@ -438,7 +438,7 @@ namespace PatentSearchOrganizer
                                 {
                                     string text = link.Attributes["href"].Value;
 
-                                    Regex patnoRx = new Regex(@"US(\d{7})[A-Z]\d");
+                                    Regex patnoRx = new Regex(@"US(\d{7,8})[A-Z]\d");
                                     Match patMatch = patnoRx.Match(text);
 
                                     if (patMatch.Success)
@@ -561,6 +561,13 @@ namespace PatentSearchOrganizer
             DataRow updateRow = dataset.Tables["items"].Select("id = " + id).First();
             updateRow["notes"] = notesInput;
             updateRow.AcceptChanges();
+        }
+
+        public void deleteItem(ItemDataset dataset)
+        {
+            DataRow deleteRow = dataset.Tables["items"].Select("id = " + id).First();
+            deleteRow.Delete();
+            dataset.Tables["items"].AcceptChanges();
         }
     }
 }

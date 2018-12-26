@@ -138,7 +138,7 @@ namespace PatentSearchOrganizer
         private void addUSButton_Click(object sender, EventArgs e)
         {
             string input = patPubTextBox.Text;
-            if(input.Length == 7)
+            if(input.Length == 7 || input.Length == 8)
             {
                 items.addItem("US Patent", input, "", Relevance.Unreviewed);
             }
@@ -206,6 +206,24 @@ namespace PatentSearchOrganizer
         private void pbSave_Click(object sender, EventArgs e)
         {
             selectedItem.setNotes(rtbNotes.Text, items.itemData);
+            refreshDisplays();
+        }
+
+        private void pbDelete_Click(object sender, EventArgs e)
+        {
+            selectedItem.deleteItem(items.itemData);
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            popupAddItem addItemForm = new popupAddItem(items.itemData);
+            addItemForm.Show();
+            refreshTree();
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            refreshTree();
             refreshDisplays();
         }
     }

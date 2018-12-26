@@ -28,19 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("8765432");
-            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("8776543");
-            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("References", new System.Windows.Forms.TreeNode[] {
-            treeNode15,
-            treeNode16});
-            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("9987654");
-            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("9988765");
-            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("Referenced By", new System.Windows.Forms.TreeNode[] {
-            treeNode18,
-            treeNode19});
-            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("9876543", new System.Windows.Forms.TreeNode[] {
-            treeNode17,
-            treeNode20});
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("8765432");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("8776543");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("References", new System.Windows.Forms.TreeNode[] {
+            treeNode8,
+            treeNode9});
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("9987654");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("9988765");
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Referenced By", new System.Windows.Forms.TreeNode[] {
+            treeNode11,
+            treeNode12});
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("9876543", new System.Windows.Forms.TreeNode[] {
+            treeNode10,
+            treeNode13});
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tree = new System.Windows.Forms.TreeView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,12 +77,17 @@
             this.rtbNotes = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.pbSave = new System.Windows.Forms.Button();
+            this.pbDelete = new System.Windows.Forms.Button();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1.SuspendLayout();
             this.figures.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.figurePictureBox)).BeginInit();
             this.specification.SuspendLayout();
             this.briefData.SuspendLayout();
             this.mainTabs.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tree
@@ -90,22 +96,22 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.tree.Location = new System.Drawing.Point(12, 61);
             this.tree.Name = "tree";
-            treeNode15.Name = "8765432";
-            treeNode15.Text = "8765432";
-            treeNode16.Name = "8776543";
-            treeNode16.Text = "8776543";
-            treeNode17.Name = "References";
-            treeNode17.Text = "References";
-            treeNode18.Name = "9987654";
-            treeNode18.Text = "9987654";
-            treeNode19.Name = "9988765";
-            treeNode19.Text = "9988765";
-            treeNode20.Name = "Referenced By";
-            treeNode20.Text = "Referenced By";
-            treeNode21.Name = "9876543";
-            treeNode21.Text = "9876543";
+            treeNode8.Name = "8765432";
+            treeNode8.Text = "8765432";
+            treeNode9.Name = "8776543";
+            treeNode9.Text = "8776543";
+            treeNode10.Name = "References";
+            treeNode10.Text = "References";
+            treeNode11.Name = "9987654";
+            treeNode11.Text = "9987654";
+            treeNode12.Name = "9988765";
+            treeNode12.Text = "9988765";
+            treeNode13.Name = "Referenced By";
+            treeNode13.Text = "Referenced By";
+            treeNode14.Name = "9876543";
+            treeNode14.Text = "9876543";
             this.tree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode21});
+            treeNode14});
             this.tree.Size = new System.Drawing.Size(183, 521);
             this.tree.TabIndex = 0;
             this.tree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tree_AfterSelect);
@@ -212,7 +218,7 @@
             this.figures.Location = new System.Drawing.Point(4, 22);
             this.figures.Name = "figures";
             this.figures.Padding = new System.Windows.Forms.Padding(3);
-            this.figures.Size = new System.Drawing.Size(514, 518);
+            this.figures.Size = new System.Drawing.Size(514, 393);
             this.figures.TabIndex = 1;
             this.figures.Text = "Figures";
             this.figures.UseVisualStyleBackColor = true;
@@ -278,7 +284,7 @@
             this.specification.Location = new System.Drawing.Point(4, 22);
             this.specification.Name = "specification";
             this.specification.Padding = new System.Windows.Forms.Padding(3);
-            this.specification.Size = new System.Drawing.Size(514, 518);
+            this.specification.Size = new System.Drawing.Size(514, 393);
             this.specification.TabIndex = 3;
             this.specification.Text = "Specification";
             this.specification.UseVisualStyleBackColor = true;
@@ -290,7 +296,7 @@
             this.specificationBrowser.Location = new System.Drawing.Point(3, 3);
             this.specificationBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.specificationBrowser.Name = "specificationBrowser";
-            this.specificationBrowser.Size = new System.Drawing.Size(508, 512);
+            this.specificationBrowser.Size = new System.Drawing.Size(508, 387);
             this.specificationBrowser.TabIndex = 0;
             // 
             // briefData
@@ -358,7 +364,7 @@
             // fetchDataGoogleButton
             // 
             this.fetchDataGoogleButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.fetchDataGoogleButton.Location = new System.Drawing.Point(729, 274);
+            this.fetchDataGoogleButton.Location = new System.Drawing.Point(729, 320);
             this.fetchDataGoogleButton.Name = "fetchDataGoogleButton";
             this.fetchDataGoogleButton.Size = new System.Drawing.Size(144, 27);
             this.fetchDataGoogleButton.TabIndex = 4;
@@ -369,7 +375,7 @@
             // addUSButton
             // 
             this.addUSButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.addUSButton.Location = new System.Drawing.Point(729, 409);
+            this.addUSButton.Location = new System.Drawing.Point(729, 455);
             this.addUSButton.Name = "addUSButton";
             this.addUSButton.Size = new System.Drawing.Size(144, 27);
             this.addUSButton.TabIndex = 5;
@@ -380,7 +386,7 @@
             // patPubTextBox
             // 
             this.patPubTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.patPubTextBox.Location = new System.Drawing.Point(725, 383);
+            this.patPubTextBox.Location = new System.Drawing.Point(725, 429);
             this.patPubTextBox.Mask = "00000000000";
             this.patPubTextBox.Name = "patPubTextBox";
             this.patPubTextBox.Size = new System.Drawing.Size(148, 20);
@@ -431,7 +437,7 @@
             // pbFetchAllGoogle
             // 
             this.pbFetchAllGoogle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbFetchAllGoogle.Location = new System.Drawing.Point(729, 307);
+            this.pbFetchAllGoogle.Location = new System.Drawing.Point(729, 353);
             this.pbFetchAllGoogle.Name = "pbFetchAllGoogle";
             this.pbFetchAllGoogle.Size = new System.Drawing.Size(144, 27);
             this.pbFetchAllGoogle.TabIndex = 10;
@@ -470,11 +476,54 @@
             this.pbSave.UseVisualStyleBackColor = true;
             this.pbSave.Click += new System.EventHandler(this.pbSave_Click);
             // 
+            // pbDelete
+            // 
+            this.pbDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbDelete.Location = new System.Drawing.Point(729, 248);
+            this.pbDelete.Name = "pbDelete";
+            this.pbDelete.Size = new System.Drawing.Size(144, 27);
+            this.pbDelete.TabIndex = 3;
+            this.pbDelete.Text = "Permanently Delete";
+            this.pbDelete.UseVisualStyleBackColor = true;
+            this.pbDelete.Click += new System.EventHandler(this.pbDelete_Click);
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton1,
+            this.toolStripButton2});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(885, 25);
+            this.toolStrip1.TabIndex = 14;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Text = "toolStripButton1";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton2.Text = "tsbRefresh";
+            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(885, 617);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.pbSave);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.rtbNotes);
@@ -485,6 +534,7 @@
             this.Controls.Add(this.patPubTextBox);
             this.Controls.Add(this.addUSButton);
             this.Controls.Add(this.fetchDataGoogleButton);
+            this.Controls.Add(this.pbDelete);
             this.Controls.Add(this.pbNotRelevant);
             this.Controls.Add(this.pbMinimallyRelevant);
             this.Controls.Add(this.pbModeratelyRelevant);
@@ -503,6 +553,8 @@
             this.specification.ResumeLayout(false);
             this.briefData.ResumeLayout(false);
             this.mainTabs.ResumeLayout(false);
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -545,6 +597,10 @@
         private System.Windows.Forms.RichTextBox rtbNotes;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button pbSave;
+        private System.Windows.Forms.Button pbDelete;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
     }
 }
 
