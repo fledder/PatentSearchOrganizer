@@ -152,6 +152,12 @@ namespace PatentSearchOrganizer
                                 }
                                 else
                                 {
+                                    refType = "Unknown";
+                                    DataRow newItemRow = itemData.Tables["items"].NewRow();
+                                    newItemRow["type"] = refType;
+                                    newItemRow["identifier"] = resultIdentifier;
+                                    itemData.Tables["items"].Rows.Add(newItemRow);
+                                    itemData.Tables["items"].AcceptChanges();
                                     break;
                                 }
                             }
