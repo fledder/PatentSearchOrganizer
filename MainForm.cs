@@ -181,39 +181,36 @@ namespace PatentSearchOrganizer
             refreshTree();
         }
 
-        private void pbHighlyRelevant_Click(object sender, EventArgs e)
+        private void setRelevanceWrapper(Relevance relevance)
         {
-            selectedItem.setRelevance(Relevance.High, items.itemData);
+            selectedItem.setRelevance(relevance, items.itemData);
             refreshTree();
             if (moveToNext) { selectedIndex = selectedIndex; }
+        }
+
+        private void pbHighlyRelevant_Click(object sender, EventArgs e)
+        {
+            setRelevanceWrapper(Relevance.High);
         }
 
         private void notYetReviewedButton_Click(object sender, EventArgs e)
         {
-            selectedItem.setRelevance(Relevance.Unreviewed, items.itemData);
-            refreshTree();
-            if (moveToNext) { selectedIndex = selectedIndex; }
+            setRelevanceWrapper(Relevance.Unreviewed);
         }
 
         private void pbModeratelyRelevant_Click(object sender, EventArgs e)
         {
-            selectedItem.setRelevance(Relevance.Moderate, items.itemData);
-            refreshTree();
-            if (moveToNext) { selectedIndex = selectedIndex; }
+            setRelevanceWrapper(Relevance.Moderate);
         }
 
         private void pbMinimallyRelevant_Click(object sender, EventArgs e)
         {
-            selectedItem.setRelevance(Relevance.Minimal, items.itemData);
-            refreshTree();
-            if (moveToNext) { selectedIndex = selectedIndex; }
+            setRelevanceWrapper(Relevance.Minimal);
         }
 
         private void pbNotRelevant_Click(object sender, EventArgs e)
         {
-            selectedItem.setRelevance(Relevance.None, items.itemData);
-            refreshTree();
-            if (moveToNext) { selectedIndex = selectedIndex; }
+            setRelevanceWrapper(Relevance.None);
         }
 
         private void cbNonRelevant_CheckedChanged(object sender, EventArgs e)
