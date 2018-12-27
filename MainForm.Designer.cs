@@ -28,19 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("8765432");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("8776543");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("References", new System.Windows.Forms.TreeNode[] {
-            treeNode8,
-            treeNode9});
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("9987654");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("9988765");
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Referenced By", new System.Windows.Forms.TreeNode[] {
-            treeNode11,
-            treeNode12});
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("9876543", new System.Windows.Forms.TreeNode[] {
-            treeNode10,
-            treeNode13});
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("8765432");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("8776543");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("References", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2});
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("9987654");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("9988765");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Referenced By", new System.Windows.Forms.TreeNode[] {
+            treeNode4,
+            treeNode5});
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("9876543", new System.Windows.Forms.TreeNode[] {
+            treeNode3,
+            treeNode6});
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tree = new System.Windows.Forms.TreeView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -81,6 +81,8 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.cbMoveToNext = new System.Windows.Forms.CheckBox();
+            this.pbFetchReferences = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.figures.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.figurePictureBox)).BeginInit();
@@ -94,27 +96,29 @@
             // 
             this.tree.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.tree.HideSelection = false;
             this.tree.Location = new System.Drawing.Point(12, 61);
             this.tree.Name = "tree";
-            treeNode8.Name = "8765432";
-            treeNode8.Text = "8765432";
-            treeNode9.Name = "8776543";
-            treeNode9.Text = "8776543";
-            treeNode10.Name = "References";
-            treeNode10.Text = "References";
-            treeNode11.Name = "9987654";
-            treeNode11.Text = "9987654";
-            treeNode12.Name = "9988765";
-            treeNode12.Text = "9988765";
-            treeNode13.Name = "Referenced By";
-            treeNode13.Text = "Referenced By";
-            treeNode14.Name = "9876543";
-            treeNode14.Text = "9876543";
+            treeNode1.Name = "8765432";
+            treeNode1.Text = "8765432";
+            treeNode2.Name = "8776543";
+            treeNode2.Text = "8776543";
+            treeNode3.Name = "References";
+            treeNode3.Text = "References";
+            treeNode4.Name = "9987654";
+            treeNode4.Text = "9987654";
+            treeNode5.Name = "9988765";
+            treeNode5.Text = "9988765";
+            treeNode6.Name = "Referenced By";
+            treeNode6.Text = "Referenced By";
+            treeNode7.Name = "9876543";
+            treeNode7.Text = "9876543";
             this.tree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode14});
+            treeNode7});
             this.tree.Size = new System.Drawing.Size(183, 521);
             this.tree.TabIndex = 0;
             this.tree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tree_AfterSelect);
+            this.tree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tree_NodeMouseClick);
             // 
             // menuStrip1
             // 
@@ -167,7 +171,7 @@
             // pbHighlyRelevant
             // 
             this.pbHighlyRelevant.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbHighlyRelevant.Location = new System.Drawing.Point(729, 116);
+            this.pbHighlyRelevant.Location = new System.Drawing.Point(729, 117);
             this.pbHighlyRelevant.Name = "pbHighlyRelevant";
             this.pbHighlyRelevant.Size = new System.Drawing.Size(144, 27);
             this.pbHighlyRelevant.TabIndex = 3;
@@ -178,7 +182,7 @@
             // pbModeratelyRelevant
             // 
             this.pbModeratelyRelevant.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbModeratelyRelevant.Location = new System.Drawing.Point(729, 149);
+            this.pbModeratelyRelevant.Location = new System.Drawing.Point(729, 150);
             this.pbModeratelyRelevant.Name = "pbModeratelyRelevant";
             this.pbModeratelyRelevant.Size = new System.Drawing.Size(144, 27);
             this.pbModeratelyRelevant.TabIndex = 3;
@@ -189,7 +193,7 @@
             // pbMinimallyRelevant
             // 
             this.pbMinimallyRelevant.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbMinimallyRelevant.Location = new System.Drawing.Point(729, 182);
+            this.pbMinimallyRelevant.Location = new System.Drawing.Point(729, 183);
             this.pbMinimallyRelevant.Name = "pbMinimallyRelevant";
             this.pbMinimallyRelevant.Size = new System.Drawing.Size(144, 27);
             this.pbMinimallyRelevant.TabIndex = 3;
@@ -200,7 +204,7 @@
             // pbNotRelevant
             // 
             this.pbNotRelevant.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbNotRelevant.Location = new System.Drawing.Point(729, 215);
+            this.pbNotRelevant.Location = new System.Drawing.Point(729, 216);
             this.pbNotRelevant.Name = "pbNotRelevant";
             this.pbNotRelevant.Size = new System.Drawing.Size(144, 27);
             this.pbNotRelevant.TabIndex = 3;
@@ -218,7 +222,7 @@
             this.figures.Location = new System.Drawing.Point(4, 22);
             this.figures.Name = "figures";
             this.figures.Padding = new System.Windows.Forms.Padding(3);
-            this.figures.Size = new System.Drawing.Size(514, 393);
+            this.figures.Size = new System.Drawing.Size(514, 353);
             this.figures.TabIndex = 1;
             this.figures.Text = "Figures";
             this.figures.UseVisualStyleBackColor = true;
@@ -284,7 +288,7 @@
             this.specification.Location = new System.Drawing.Point(4, 22);
             this.specification.Name = "specification";
             this.specification.Padding = new System.Windows.Forms.Padding(3);
-            this.specification.Size = new System.Drawing.Size(514, 393);
+            this.specification.Size = new System.Drawing.Size(514, 353);
             this.specification.TabIndex = 3;
             this.specification.Text = "Specification";
             this.specification.UseVisualStyleBackColor = true;
@@ -296,18 +300,17 @@
             this.specificationBrowser.Location = new System.Drawing.Point(3, 3);
             this.specificationBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.specificationBrowser.Name = "specificationBrowser";
-            this.specificationBrowser.Size = new System.Drawing.Size(508, 387);
+            this.specificationBrowser.Size = new System.Drawing.Size(508, 347);
             this.specificationBrowser.TabIndex = 0;
             // 
             // briefData
             // 
             this.briefData.Controls.Add(this.claimsWebBrowser);
             this.briefData.Controls.Add(this.itemAbstract);
-            this.briefData.Controls.Add(this.itemTitle);
             this.briefData.Location = new System.Drawing.Point(4, 22);
             this.briefData.Name = "briefData";
             this.briefData.Padding = new System.Windows.Forms.Padding(3);
-            this.briefData.Size = new System.Drawing.Size(514, 393);
+            this.briefData.Size = new System.Drawing.Size(514, 353);
             this.briefData.TabIndex = 0;
             this.briefData.Text = "Brief Overview";
             this.briefData.UseVisualStyleBackColor = true;
@@ -321,7 +324,7 @@
             this.claimsWebBrowser.Location = new System.Drawing.Point(7, 191);
             this.claimsWebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.claimsWebBrowser.Name = "claimsWebBrowser";
-            this.claimsWebBrowser.Size = new System.Drawing.Size(501, 199);
+            this.claimsWebBrowser.Size = new System.Drawing.Size(501, 159);
             this.claimsWebBrowser.TabIndex = 2;
             // 
             // itemAbstract
@@ -340,9 +343,9 @@
             this.itemTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.itemTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.itemTitle.Location = new System.Drawing.Point(3, 3);
+            this.itemTitle.Location = new System.Drawing.Point(201, 61);
             this.itemTitle.Name = "itemTitle";
-            this.itemTitle.Size = new System.Drawing.Size(505, 57);
+            this.itemTitle.Size = new System.Drawing.Size(505, 37);
             this.itemTitle.TabIndex = 0;
             this.itemTitle.Text = "Title of the Item";
             this.itemTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -355,16 +358,16 @@
             this.mainTabs.Controls.Add(this.briefData);
             this.mainTabs.Controls.Add(this.specification);
             this.mainTabs.Controls.Add(this.figures);
-            this.mainTabs.Location = new System.Drawing.Point(201, 61);
+            this.mainTabs.Location = new System.Drawing.Point(201, 101);
             this.mainTabs.Name = "mainTabs";
             this.mainTabs.SelectedIndex = 0;
-            this.mainTabs.Size = new System.Drawing.Size(522, 419);
+            this.mainTabs.Size = new System.Drawing.Size(522, 379);
             this.mainTabs.TabIndex = 2;
             // 
             // fetchDataGoogleButton
             // 
             this.fetchDataGoogleButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.fetchDataGoogleButton.Location = new System.Drawing.Point(729, 320);
+            this.fetchDataGoogleButton.Location = new System.Drawing.Point(729, 293);
             this.fetchDataGoogleButton.Name = "fetchDataGoogleButton";
             this.fetchDataGoogleButton.Size = new System.Drawing.Size(144, 27);
             this.fetchDataGoogleButton.TabIndex = 4;
@@ -414,7 +417,7 @@
             // notYetReviewedButton
             // 
             this.notYetReviewedButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.notYetReviewedButton.Location = new System.Drawing.Point(729, 83);
+            this.notYetReviewedButton.Location = new System.Drawing.Point(729, 84);
             this.notYetReviewedButton.Name = "notYetReviewedButton";
             this.notYetReviewedButton.Size = new System.Drawing.Size(144, 27);
             this.notYetReviewedButton.TabIndex = 3;
@@ -437,7 +440,7 @@
             // pbFetchAllGoogle
             // 
             this.pbFetchAllGoogle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbFetchAllGoogle.Location = new System.Drawing.Point(729, 353);
+            this.pbFetchAllGoogle.Location = new System.Drawing.Point(729, 326);
             this.pbFetchAllGoogle.Name = "pbFetchAllGoogle";
             this.pbFetchAllGoogle.Size = new System.Drawing.Size(144, 27);
             this.pbFetchAllGoogle.TabIndex = 10;
@@ -479,7 +482,7 @@
             // pbDelete
             // 
             this.pbDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbDelete.Location = new System.Drawing.Point(729, 248);
+            this.pbDelete.Location = new System.Drawing.Point(729, 249);
             this.pbDelete.Name = "pbDelete";
             this.pbDelete.Size = new System.Drawing.Size(144, 27);
             this.pbDelete.TabIndex = 3;
@@ -518,15 +521,43 @@
             this.toolStripButton2.Text = "tsbRefresh";
             this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
+            // cbMoveToNext
+            // 
+            this.cbMoveToNext.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbMoveToNext.AutoSize = true;
+            this.cbMoveToNext.Checked = true;
+            this.cbMoveToNext.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbMoveToNext.Location = new System.Drawing.Point(729, 61);
+            this.cbMoveToNext.Name = "cbMoveToNext";
+            this.cbMoveToNext.Size = new System.Drawing.Size(137, 17);
+            this.cbMoveToNext.TabIndex = 15;
+            this.cbMoveToNext.Text = "Move to next after click";
+            this.cbMoveToNext.UseVisualStyleBackColor = true;
+            this.cbMoveToNext.CheckedChanged += new System.EventHandler(this.cbMoveToNext_CheckedChanged);
+            // 
+            // pbFetchReferences
+            // 
+            this.pbFetchReferences.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbFetchReferences.Location = new System.Drawing.Point(729, 376);
+            this.pbFetchReferences.Name = "pbFetchReferences";
+            this.pbFetchReferences.Size = new System.Drawing.Size(144, 27);
+            this.pbFetchReferences.TabIndex = 10;
+            this.pbFetchReferences.Text = "Fetch References";
+            this.pbFetchReferences.UseVisualStyleBackColor = true;
+            this.pbFetchReferences.Click += new System.EventHandler(this.pbFetchReferences_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(885, 617);
+            this.Controls.Add(this.cbMoveToNext);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.pbSave);
+            this.Controls.Add(this.itemTitle);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.rtbNotes);
+            this.Controls.Add(this.pbFetchReferences);
             this.Controls.Add(this.pbFetchAllGoogle);
             this.Controls.Add(this.cbNonRelevant);
             this.Controls.Add(this.cpcSearchTerm);
@@ -601,6 +632,8 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.CheckBox cbMoveToNext;
+        private System.Windows.Forms.Button pbFetchReferences;
     }
 }
 

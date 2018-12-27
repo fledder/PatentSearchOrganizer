@@ -17,11 +17,29 @@ namespace PatentSearchOrganizer
         private Item selectedItem;
         private string filePath;
         private bool showNotRelevant;
+        private int _selectedIndex;
+        private int selectedIndex
+        {
+            get { return _selectedIndex; }
+            set
+            {
+                _selectedIndex = value;
+                if(tree.Nodes.Count > 0)
+                {
+                    tree.SelectedNode = tree.Nodes[_selectedIndex];
+                    items.selectItemByIdentifier(tree.SelectedNode.Text);
+                    selectedItem = items.getSelectedItem();
+                    refreshDisplays();
+                }
+            }
+        }
+        private bool moveToNext;
 
         public MainForm()
         {
             InitializeComponent();
             showNotRelevant = false;
+            moveToNext = true;
             items = new ItemsHandler();
             //items.addItem("US Patent", "6789012", "https://example.com/9876543", Relevance.High);
             //items.selectItem(0);
@@ -30,6 +48,7 @@ namespace PatentSearchOrganizer
             //selectedItem.retrieveReferences("Google Patents", this.items.itemData);
             //selectedItem = items.getSelectedItem();
             selectedItem = null;
+            //selectedIndex = 0;
             refreshTree();
             refreshDisplays();
         }
@@ -122,11 +141,13 @@ namespace PatentSearchOrganizer
 
         private void tree_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            string selectedIdentifier = tree.SelectedNode.Text;
+            /*string selectedIdentifier = tree.SelectedNode.Text;
             items.selectItemByIdentifier(selectedIdentifier);
             selectedItem = items.getSelectedItem();
-            refreshDisplays();
+            refreshDisplays();*/
         }
+
+        
 
         private void fetchDataGoogleButton_Click(object sender, EventArgs e)
         {
@@ -164,36 +185,42 @@ namespace PatentSearchOrganizer
         {
             selectedItem.setRelevance(Relevance.High, items.itemData);
             refreshTree();
+            if (moveToNext) { selectedIndex = selectedIndex; }
         }
 
         private void notYetReviewedButton_Click(object sender, EventArgs e)
         {
             selectedItem.setRelevance(Relevance.Unreviewed, items.itemData);
             refreshTree();
+            if (moveToNext) { selectedIndex = selectedIndex; }
         }
 
         private void pbModeratelyRelevant_Click(object sender, EventArgs e)
         {
             selectedItem.setRelevance(Relevance.Moderate, items.itemData);
             refreshTree();
+            if (moveToNext) { selectedIndex = selectedIndex; }
         }
 
         private void pbMinimallyRelevant_Click(object sender, EventArgs e)
         {
             selectedItem.setRelevance(Relevance.Minimal, items.itemData);
             refreshTree();
+            if (moveToNext) { selectedIndex = selectedIndex; }
         }
 
         private void pbNotRelevant_Click(object sender, EventArgs e)
         {
             selectedItem.setRelevance(Relevance.None, items.itemData);
             refreshTree();
+            if (moveToNext) { selectedIndex = selectedIndex; }
         }
 
         private void cbNonRelevant_CheckedChanged(object sender, EventArgs e)
         {
             showNotRelevant = cbNonRelevant.Checked;
             refreshTree();
+            if (moveToNext) { selectedIndex = selectedIndex; }
         }
 
         private void pbFetchAllGoogle_Click(object sender, EventArgs e)
@@ -225,6 +252,22 @@ namespace PatentSearchOrganizer
         {
             refreshTree();
             refreshDisplays();
+        }
+
+        private void tree_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            selectedIndex = e.Node.Index;
+        }
+
+        private void cbMoveToNext_CheckedChanged(object sender, EventArgs e)
+        {
+            moveToNext = cbMoveToNext.Checked;
+        }
+
+        private void pbFetchReferences_Click(object sender, EventArgs e)
+        {
+            selectedItem.retrieveReferences("Google Patents", items.itemData);
+            refreshTree();
         }
     }
 }
