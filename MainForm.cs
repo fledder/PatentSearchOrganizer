@@ -24,7 +24,7 @@ namespace PatentSearchOrganizer
             set
             {
                 _selectedIndex = value;
-                if(tree.Nodes.Count > 0)
+                if(tree.Nodes.Count > 0 && items.itemData.Tables["items"].Rows.Count > 0)
                 {
                     tree.SelectedNode = tree.Nodes[_selectedIndex];
                     items.selectItemByIdentifier(tree.SelectedNode.Text);
@@ -236,6 +236,8 @@ namespace PatentSearchOrganizer
         private void pbDelete_Click(object sender, EventArgs e)
         {
             selectedItem.deleteItem(items.itemData);
+            selectedItem = null;
+            refreshTree();
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
@@ -253,7 +255,10 @@ namespace PatentSearchOrganizer
 
         private void tree_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            selectedIndex = e.Node.Index;
+            if(items.itemData.Tables["items"].Rows.Count > 0)
+            {
+                selectedIndex = e.Node.Index;
+            }
         }
 
         private void cbMoveToNext_CheckedChanged(object sender, EventArgs e)

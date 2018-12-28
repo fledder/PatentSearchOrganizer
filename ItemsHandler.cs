@@ -588,7 +588,7 @@ namespace PatentSearchOrganizer
         {
             DataRow deleteRow = dataset.Tables["items"].Select("id = " + id).First();
             deleteRow.Delete();
-            dataset.Tables["items"].AcceptChanges();
+            dataset.AcceptChanges();
         }
     }
 }
