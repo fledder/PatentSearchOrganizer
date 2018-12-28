@@ -132,6 +132,7 @@ namespace PatentSearchOrganizer
                         EnumerableRowCollection<int> existingResults = from item in itemData.items where item.identifier == resultIdentifier select item.id;
                         if (existingResults.Count() == 0)
                         {
+                            EnumerableRowCollection<ItemDataset.itemsRow> refExistRows;
                             Regex patnoRx = new Regex(@"US(\d{7,8})[A-Z]?\d?$");
                             Match patMatch = patnoRx.Match(resultIdentifier);
                             string refIdentifier = "";
@@ -153,21 +154,20 @@ namespace PatentSearchOrganizer
                                 else
                                 {
                                     refType = "Unknown";
-                                    DataRow newItemRow = itemData.Tables["items"].NewRow();
-                                    newItemRow["type"] = refType;
-                                    newItemRow["identifier"] = resultIdentifier;
-                                    itemData.Tables["items"].Rows.Add(newItemRow);
-                                    itemData.Tables["items"].AcceptChanges();
-                                    break;
+                                    refIdentifier = resultIdentifier;
                                 }
                             }
-                            DataRow newRow = itemData.Tables["items"].NewRow();
-                            newRow["identifier"] = refIdentifier;
-                            newRow["type"] = refType;
-                            itemData.Tables["items"].Rows.Add(newRow);
-                            itemData.Tables["items"].AcceptChanges();
-                            int newID = (from item in itemData.items where item.identifier == refIdentifier select item.id).First();
-                            itemData.addItemComponent(newID, "Title", resultItem.SelectToken("patent.title").ToString());
+                            refExistRows = from item in itemData.items where item.identifier == refIdentifier select item;
+                            if(refExistRows.Count() == 0)
+                            {
+                                DataRow newRow = itemData.Tables["items"].NewRow();
+                                newRow["identifier"] = refIdentifier;
+                                newRow["type"] = refType;
+                                itemData.Tables["items"].Rows.Add(newRow);
+                                itemData.Tables["items"].AcceptChanges();
+                                int newID = (from item in itemData.items where item.identifier == refIdentifier select item.id).First();
+                                itemData.addItemComponent(newID, "Title", resultItem.SelectToken("patent.title").ToString());
+                            }
                         }
                     }
                 }
@@ -209,6 +209,21 @@ namespace PatentSearchOrganizer
                     item.retrieveData("Google Patents", itemData);
                 }
             }
+        }
+
+        public void removeIrrelevantData()
+        {
+            foreach(ItemDataset.itemsRow row in itemData.Tables["items"].Rows)
+            {
+                if ((Relevance)row.relevance == Relevance.None)
+                {
+                    foreach (ItemDataset.itemComponentsRow deleteRow in itemData.Tables["itemComponents"].Select("itemID = " + row.id + " and componentType <> 'Title'"))
+                    {
+                        deleteRow.Delete();
+                    }
+                }
+            }
+            itemData.AcceptChanges();
         }
     }
 

@@ -28,19 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("8765432");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("8776543");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("References", new System.Windows.Forms.TreeNode[] {
-            treeNode8,
-            treeNode9});
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("9987654");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("9988765");
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Referenced By", new System.Windows.Forms.TreeNode[] {
-            treeNode11,
-            treeNode12});
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("9876543", new System.Windows.Forms.TreeNode[] {
-            treeNode10,
-            treeNode13});
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("8765432");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("8776543");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("References", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2});
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("9987654");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("9988765");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Referenced By", new System.Windows.Forms.TreeNode[] {
+            treeNode4,
+            treeNode5});
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("9876543", new System.Windows.Forms.TreeNode[] {
+            treeNode3,
+            treeNode6});
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tree = new System.Windows.Forms.TreeView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -83,6 +83,8 @@
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.cbMoveToNext = new System.Windows.Forms.CheckBox();
             this.pbFetchReferences = new System.Windows.Forms.Button();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cleanUpIrrelevantItemDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.figures.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.figurePictureBox)).BeginInit();
@@ -99,22 +101,22 @@
             this.tree.HideSelection = false;
             this.tree.Location = new System.Drawing.Point(12, 61);
             this.tree.Name = "tree";
-            treeNode8.Name = "8765432";
-            treeNode8.Text = "8765432";
-            treeNode9.Name = "8776543";
-            treeNode9.Text = "8776543";
-            treeNode10.Name = "References";
-            treeNode10.Text = "References";
-            treeNode11.Name = "9987654";
-            treeNode11.Text = "9987654";
-            treeNode12.Name = "9988765";
-            treeNode12.Text = "9988765";
-            treeNode13.Name = "Referenced By";
-            treeNode13.Text = "Referenced By";
-            treeNode14.Name = "9876543";
-            treeNode14.Text = "9876543";
+            treeNode1.Name = "8765432";
+            treeNode1.Text = "8765432";
+            treeNode2.Name = "8776543";
+            treeNode2.Text = "8776543";
+            treeNode3.Name = "References";
+            treeNode3.Text = "References";
+            treeNode4.Name = "9987654";
+            treeNode4.Text = "9987654";
+            treeNode5.Name = "9988765";
+            treeNode5.Text = "9988765";
+            treeNode6.Name = "Referenced By";
+            treeNode6.Text = "Referenced By";
+            treeNode7.Name = "9876543";
+            treeNode7.Text = "9876543";
             this.tree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode14});
+            treeNode7});
             this.tree.Size = new System.Drawing.Size(183, 521);
             this.tree.TabIndex = 0;
             this.tree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tree_AfterSelect);
@@ -124,6 +126,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.toolsToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -288,7 +291,7 @@
             this.specification.Location = new System.Drawing.Point(4, 22);
             this.specification.Name = "specification";
             this.specification.Padding = new System.Windows.Forms.Padding(3);
-            this.specification.Size = new System.Drawing.Size(514, 353);
+            this.specification.Size = new System.Drawing.Size(514, 361);
             this.specification.TabIndex = 3;
             this.specification.Text = "Specification";
             this.specification.UseVisualStyleBackColor = true;
@@ -300,7 +303,7 @@
             this.specificationBrowser.Location = new System.Drawing.Point(3, 3);
             this.specificationBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.specificationBrowser.Name = "specificationBrowser";
-            this.specificationBrowser.Size = new System.Drawing.Size(508, 347);
+            this.specificationBrowser.Size = new System.Drawing.Size(508, 355);
             this.specificationBrowser.TabIndex = 0;
             // 
             // briefData
@@ -310,7 +313,7 @@
             this.briefData.Location = new System.Drawing.Point(4, 22);
             this.briefData.Name = "briefData";
             this.briefData.Padding = new System.Windows.Forms.Padding(3);
-            this.briefData.Size = new System.Drawing.Size(514, 353);
+            this.briefData.Size = new System.Drawing.Size(514, 361);
             this.briefData.TabIndex = 0;
             this.briefData.Text = "Brief Overview";
             this.briefData.UseVisualStyleBackColor = true;
@@ -546,6 +549,21 @@
             this.pbFetchReferences.UseVisualStyleBackColor = true;
             this.pbFetchReferences.Click += new System.EventHandler(this.pbFetchReferences_Click);
             // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cleanUpIrrelevantItemDataToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // cleanUpIrrelevantItemDataToolStripMenuItem
+            // 
+            this.cleanUpIrrelevantItemDataToolStripMenuItem.Name = "cleanUpIrrelevantItemDataToolStripMenuItem";
+            this.cleanUpIrrelevantItemDataToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.cleanUpIrrelevantItemDataToolStripMenuItem.Text = "Clean Up Irrelevant Item Data";
+            this.cleanUpIrrelevantItemDataToolStripMenuItem.Click += new System.EventHandler(this.cleanUpIrrelevantItemDataToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -634,6 +652,8 @@
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.CheckBox cbMoveToNext;
         private System.Windows.Forms.Button pbFetchReferences;
+        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cleanUpIrrelevantItemDataToolStripMenuItem;
     }
 }
 

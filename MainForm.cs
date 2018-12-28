@@ -266,5 +266,10 @@ namespace PatentSearchOrganizer
             selectedItem.retrieveReferences("Google Patents", items.itemData);
             refreshTree();
         }
+
+        private void cleanUpIrrelevantItemDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            items.removeIrrelevantData();
+        }
     }
 }
