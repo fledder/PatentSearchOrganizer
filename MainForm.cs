@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -15,6 +17,7 @@ namespace PatentSearchOrganizer
     {
         private ItemsHandler items;
         private Item selectedItem;
+        private Historian history;
         private string filePath;
         private bool showNotRelevant;
         private int _selectedIndex;
@@ -34,10 +37,12 @@ namespace PatentSearchOrganizer
             }
         }
         private bool moveToNext;
+        private string pid;
 
         public MainForm()
         {
             InitializeComponent();
+            pid = Process.GetCurrentProcess().Id.ToString();
             showNotRelevant = false;
             moveToNext = true;
             items = new ItemsHandler();
@@ -50,7 +55,21 @@ namespace PatentSearchOrganizer
             selectedItem = null;
             //selectedIndex = 0;
             refreshTree();
+            history = new Historian(items.itemData);
             refreshDisplays();
+        }
+
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            string folderPath = System.IO.Path.GetTempPath();
+            DirectoryInfo di = new DirectoryInfo(folderPath);
+            IEnumerable<string> fileList = di.GetFiles().Where(file => file.Name.StartsWith("pso_" + pid)).Select(file => file.Name);
+            foreach(string path in fileList)
+            {
+                File.Delete(path);
+            }
+            base.OnFormClosing(e);
         }
 
         public void refreshTree()
@@ -58,51 +77,97 @@ namespace PatentSearchOrganizer
             items.updateTreeData(tree, showNotRelevant);
         }
 
+        public void refreshFigures()
+        {
+            Stream figureImageStream = new MemoryStream(selectedItem.getSelectedImage());
+            figurePictureBox.Image = null;
+            if (figureImageStream.Length > 0)
+            {
+                Image figureImage = Image.FromStream(figureImageStream);
+                figurePictureBox.Image = figureImage;
+            }
+        }
+
         public void refreshDisplays()
         {
-            if(selectedItem != null)
+            if (selectedItem != null)
             {
-                itemTitle.Text = selectedItem.getTitle();
+                selectedItem = items.getSelectedItem();
+                itemTitle.Text = selectedItem.getIdentifier() + ": " + selectedItem.getTitle();
                 itemAbstract.Text = selectedItem.getAbstract();
                 claimsWebBrowser.Navigate("about:blank");
                 claimsWebBrowser.Document.OpenNew(true);
                 claimsWebBrowser.Document.Write(selectedItem.getClaims());
-                Stream figureImageStream = new MemoryStream(selectedItem.getSelectedImage());
-                figurePictureBox.Image = null;
-                if (figureImageStream.Length > 0)
-                {
-                    Image figureImage = Image.FromStream(figureImageStream);
-                    figurePictureBox.Image = figureImage;
-                }
+                refreshFigures();
                 specificationBrowser.Navigate("about:blank");
                 specificationBrowser.Document.OpenNew(true);
                 specificationBrowser.Document.Write(selectedItem.getDescription());
                 rtbNotes.Text = selectedItem.getNotes();
+                byte[] pdfData = selectedItem.getPDF();
+                wbPDF.Navigate("about:blank");
+                if (pdfData != null && pdfData.Length > 0)
+                {
+                    string tempPath = System.IO.Path.GetTempPath();
+                    string filePath = tempPath + "pso_" + pid + selectedItem.getIdentifier() + "tempfile.pdf";
+
+                    bool written = false;
+                    Stopwatch writeTimer = Stopwatch.StartNew();
+                    while (writeTimer.ElapsedMilliseconds < 15000 && !written)
+                    {
+                        try
+                        {
+                            File.WriteAllBytes(filePath, pdfData);
+                            written = true;
+                        }
+                        catch (IOException e)
+                        {
+                            if (e.HResult != -2147024864)
+                            {
+                                throw;
+                            }
+                            else
+                            {
+                                Thread.Sleep(500);
+                            }
+                        }
+                    }
+                    wbPDF.Navigate(filePath);
+                }
+                if (mainTabs.SelectedTab.Name == "tabEspacenet")
+                {
+                    string countryCode = selectedItem.getIdentifier().Substring(0, 2);
+                    string patIdent = selectedItem.getIdentifier().Substring(2);
+                    string espacenetUrl = "https://worldwide.espacenet.com/publicationDetails/originalDocument?CC=" + countryCode + "&NR=" + patIdent + "&KC=A&FT=D&ND=3&DB=&locale=en_EP#";
+
+                    wbEspacenet.Navigate(espacenetUrl);
+                }
+                history.getListViewData(historyListView, items.itemData);
             }
         }
+
 
         private void firstImageButton_Click(object sender, EventArgs e)
         {
             selectedItem.selectImage(0);
-            refreshDisplays();
+            refreshFigures();
         }
 
         private void previousImageButton_Click(object sender, EventArgs e)
         {
             selectedItem.selectPreviousImage();
-            refreshDisplays();
+            refreshFigures();
         }
 
         private void nextImageButton_Click(object sender, EventArgs e)
         {
             selectedItem.selectNextImage();
-            refreshDisplays();
+            refreshFigures();
         }
 
         private void lastImageButton_Click(object sender, EventArgs e)
         {
             selectedItem.selectLastImage();
-            refreshDisplays();
+            refreshFigures();
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -167,6 +232,7 @@ namespace PatentSearchOrganizer
             {
                 items.addItem("US Publication", input, "", Relevance.Unreviewed);
             }
+            history.historyItems.Add(new historyItem("Add Single Item", input, items.itemData));
             refreshTree();
             items.selectItemByIdentifier(input);
             selectedItem = items.getSelectedItem();
@@ -179,6 +245,8 @@ namespace PatentSearchOrganizer
             string term = cpcSearchTerm.Text;
             items.searchCPC("Google Patents", term);
             refreshTree();
+            history.getListViewData(historyListView, items.itemData);
+            historyListView.Refresh();
         }
 
         private void setRelevanceWrapper(Relevance relevance)
@@ -245,6 +313,8 @@ namespace PatentSearchOrganizer
             popupAddItem addItemForm = new popupAddItem(items.itemData);
             addItemForm.Show();
             refreshTree();
+            refreshDisplays();
+            refreshTree();
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
@@ -270,11 +340,36 @@ namespace PatentSearchOrganizer
         {
             selectedItem.retrieveReferences("Google Patents", items.itemData);
             refreshTree();
+            history.getListViewData(historyListView, items.itemData);
         }
 
         private void cleanUpIrrelevantItemDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
             items.removeIrrelevantData();
+        }
+
+        private void pbGetUSPTOPDF_Click(object sender, EventArgs e)
+        {
+            selectedItem.retrievePDF("USPTO", items.itemData);
+            refreshDisplays();
+        }
+
+        private void pbGetPDFGoogle_Click(object sender, EventArgs e)
+        {
+            selectedItem.retrievePDF("Google Patents", items.itemData);
+            refreshDisplays();
+        }
+
+        private void mainTabs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (mainTabs.SelectedTab.Name == "tabEspacenet")
+            {
+                string countryCode = selectedItem.getIdentifier().Substring(0, 2);
+                string patIdent = selectedItem.getIdentifier().Substring(2);
+                string espacenetUrl = "https://worldwide.espacenet.com/publicationDetails/originalDocument?CC="+countryCode+"&NR="+patIdent+"&KC=A&FT=D&ND=3&DB=&locale=en_EP#";
+
+                wbEspacenet.Navigate(espacenetUrl);
+            }
         }
     }
 }

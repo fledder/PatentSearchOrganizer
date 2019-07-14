@@ -44,10 +44,24 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="history" msprop:Generator_TableClassName="historyDataTable" msprop:Generator_TableVarName="tablehistory" msprop:Generator_RowChangedName="historyRowChanged" msprop:Generator_TablePropName="history" msprop:Generator_RowDeletingName="historyRowDeleting" msprop:Generator_RowChangingName="historyRowChanging" msprop:Generator_RowEvHandlerName="historyRowChangeEventHandler" msprop:Generator_RowDeletedName="historyRowDeleted" msprop:Generator_RowClassName="historyRow" msprop:Generator_UserTableName="history" msprop:Generator_RowEvArgName="historyRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="id" msdata:ReadOnly="true" msdata:AutoIncrement="true" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:int" />
+              <xs:element name="timestamp" msprop:Generator_ColumnVarNameInTable="columntimestamp" msprop:Generator_ColumnPropNameInRow="timestamp" msprop:Generator_ColumnPropNameInTable="timestampColumn" msprop:Generator_UserColumnName="timestamp" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="type" msprop:Generator_ColumnVarNameInTable="columntype" msprop:Generator_ColumnPropNameInRow="type" msprop:Generator_ColumnPropNameInTable="typeColumn" msprop:Generator_UserColumnName="type" type="xs:string" minOccurs="0" />
+              <xs:element name="query" msprop:Generator_ColumnVarNameInTable="columnquery" msprop:Generator_ColumnPropNameInRow="query" msprop:Generator_ColumnPropNameInTable="queryColumn" msprop:Generator_UserColumnName="query" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:choice>
     </xs:complexType>
     <xs:unique name="Constraint1">
       <xs:selector xpath=".//mstns:items" />
+      <xs:field xpath="mstns:id" />
+    </xs:unique>
+    <xs:unique name="history_Constraint1" msdata:ConstraintName="Constraint1">
+      <xs:selector xpath=".//mstns:history" />
       <xs:field xpath="mstns:id" />
     </xs:unique>
     <xs:keyref name="FK_items_itemComponents" refer="Constraint1" msprop:rel_Generator_UserChildTable="itemComponents" msprop:rel_Generator_ChildPropName="GetitemComponentsRows" msprop:rel_Generator_UserRelationName="FK_items_itemComponents" msprop:rel_Generator_RelationVarName="relationFK_items_itemComponents" msprop:rel_Generator_UserParentTable="items" msprop:rel_Generator_ParentPropName="itemsRow">

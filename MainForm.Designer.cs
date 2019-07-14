@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("8765432");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("8776543");
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("References", new System.Windows.Forms.TreeNode[] {
@@ -48,6 +49,8 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cleanUpIrrelevantItemDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pbHighlyRelevant = new System.Windows.Forms.Button();
             this.pbModeratelyRelevant = new System.Windows.Forms.Button();
@@ -64,8 +67,14 @@
             this.briefData = new System.Windows.Forms.TabPage();
             this.claimsWebBrowser = new System.Windows.Forms.WebBrowser();
             this.itemAbstract = new System.Windows.Forms.RichTextBox();
-            this.itemTitle = new System.Windows.Forms.Label();
             this.mainTabs = new System.Windows.Forms.TabControl();
+            this.pdf = new System.Windows.Forms.TabPage();
+            this.wbPDF = new System.Windows.Forms.WebBrowser();
+            this.tabEspacenet = new System.Windows.Forms.TabPage();
+            this.wbEspacenet = new System.Windows.Forms.WebBrowser();
+            this.tabSearchHistory = new System.Windows.Forms.TabPage();
+            this.historyBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.itemDataset = new PatentSearchOrganizer.ItemDataset();
             this.fetchDataGoogleButton = new System.Windows.Forms.Button();
             this.addUSButton = new System.Windows.Forms.Button();
             this.patPubTextBox = new System.Windows.Forms.MaskedTextBox();
@@ -83,14 +92,22 @@
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.cbMoveToNext = new System.Windows.Forms.CheckBox();
             this.pbFetchReferences = new System.Windows.Forms.Button();
-            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cleanUpIrrelevantItemDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pbGetUSPTOPDF = new System.Windows.Forms.Button();
+            this.pbGetPDFGoogle = new System.Windows.Forms.Button();
+            this.itemTitle = new System.Windows.Forms.TextBox();
+            this.pbQueryEspacenet = new System.Windows.Forms.Button();
+            this.historyListView = new System.Windows.Forms.ListView();
             this.menuStrip1.SuspendLayout();
             this.figures.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.figurePictureBox)).BeginInit();
             this.specification.SuspendLayout();
             this.briefData.SuspendLayout();
             this.mainTabs.SuspendLayout();
+            this.pdf.SuspendLayout();
+            this.tabEspacenet.SuspendLayout();
+            this.tabSearchHistory.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.historyBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.itemDataset)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -117,7 +134,7 @@
             treeNode7.Text = "9876543";
             this.tree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode7});
-            this.tree.Size = new System.Drawing.Size(183, 521);
+            this.tree.Size = new System.Drawing.Size(183, 756);
             this.tree.TabIndex = 0;
             this.tree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tree_AfterSelect);
             this.tree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tree_NodeMouseClick);
@@ -130,7 +147,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(885, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1039, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -165,6 +182,21 @@
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cleanUpIrrelevantItemDataToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // cleanUpIrrelevantItemDataToolStripMenuItem
+            // 
+            this.cleanUpIrrelevantItemDataToolStripMenuItem.Name = "cleanUpIrrelevantItemDataToolStripMenuItem";
+            this.cleanUpIrrelevantItemDataToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.cleanUpIrrelevantItemDataToolStripMenuItem.Text = "Clean Up Irrelevant Item Data";
+            this.cleanUpIrrelevantItemDataToolStripMenuItem.Click += new System.EventHandler(this.cleanUpIrrelevantItemDataToolStripMenuItem_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
@@ -174,7 +206,7 @@
             // pbHighlyRelevant
             // 
             this.pbHighlyRelevant.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbHighlyRelevant.Location = new System.Drawing.Point(729, 117);
+            this.pbHighlyRelevant.Location = new System.Drawing.Point(883, 117);
             this.pbHighlyRelevant.Name = "pbHighlyRelevant";
             this.pbHighlyRelevant.Size = new System.Drawing.Size(144, 27);
             this.pbHighlyRelevant.TabIndex = 3;
@@ -185,7 +217,7 @@
             // pbModeratelyRelevant
             // 
             this.pbModeratelyRelevant.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbModeratelyRelevant.Location = new System.Drawing.Point(729, 150);
+            this.pbModeratelyRelevant.Location = new System.Drawing.Point(883, 150);
             this.pbModeratelyRelevant.Name = "pbModeratelyRelevant";
             this.pbModeratelyRelevant.Size = new System.Drawing.Size(144, 27);
             this.pbModeratelyRelevant.TabIndex = 3;
@@ -196,7 +228,7 @@
             // pbMinimallyRelevant
             // 
             this.pbMinimallyRelevant.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbMinimallyRelevant.Location = new System.Drawing.Point(729, 183);
+            this.pbMinimallyRelevant.Location = new System.Drawing.Point(883, 183);
             this.pbMinimallyRelevant.Name = "pbMinimallyRelevant";
             this.pbMinimallyRelevant.Size = new System.Drawing.Size(144, 27);
             this.pbMinimallyRelevant.TabIndex = 3;
@@ -207,7 +239,7 @@
             // pbNotRelevant
             // 
             this.pbNotRelevant.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbNotRelevant.Location = new System.Drawing.Point(729, 216);
+            this.pbNotRelevant.Location = new System.Drawing.Point(883, 216);
             this.pbNotRelevant.Name = "pbNotRelevant";
             this.pbNotRelevant.Size = new System.Drawing.Size(144, 27);
             this.pbNotRelevant.TabIndex = 3;
@@ -225,7 +257,7 @@
             this.figures.Location = new System.Drawing.Point(4, 22);
             this.figures.Name = "figures";
             this.figures.Padding = new System.Windows.Forms.Padding(3);
-            this.figures.Size = new System.Drawing.Size(514, 361);
+            this.figures.Size = new System.Drawing.Size(668, 596);
             this.figures.TabIndex = 1;
             this.figures.Text = "Figures";
             this.figures.UseVisualStyleBackColor = true;
@@ -233,7 +265,7 @@
             // lastImageButton
             // 
             this.lastImageButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lastImageButton.Location = new System.Drawing.Point(433, 4);
+            this.lastImageButton.Location = new System.Drawing.Point(586, 4);
             this.lastImageButton.Name = "lastImageButton";
             this.lastImageButton.Size = new System.Drawing.Size(75, 23);
             this.lastImageButton.TabIndex = 1;
@@ -244,7 +276,7 @@
             // nextImageButton
             // 
             this.nextImageButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.nextImageButton.Location = new System.Drawing.Point(352, 4);
+            this.nextImageButton.Location = new System.Drawing.Point(505, 4);
             this.nextImageButton.Name = "nextImageButton";
             this.nextImageButton.Size = new System.Drawing.Size(75, 23);
             this.nextImageButton.TabIndex = 1;
@@ -280,7 +312,7 @@
             this.figurePictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.figurePictureBox.Location = new System.Drawing.Point(3, 33);
             this.figurePictureBox.Name = "figurePictureBox";
-            this.figurePictureBox.Size = new System.Drawing.Size(505, 325);
+            this.figurePictureBox.Size = new System.Drawing.Size(665, 563);
             this.figurePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.figurePictureBox.TabIndex = 0;
             this.figurePictureBox.TabStop = false;
@@ -291,7 +323,7 @@
             this.specification.Location = new System.Drawing.Point(4, 22);
             this.specification.Name = "specification";
             this.specification.Padding = new System.Windows.Forms.Padding(3);
-            this.specification.Size = new System.Drawing.Size(514, 361);
+            this.specification.Size = new System.Drawing.Size(668, 596);
             this.specification.TabIndex = 3;
             this.specification.Text = "Specification";
             this.specification.UseVisualStyleBackColor = true;
@@ -303,7 +335,7 @@
             this.specificationBrowser.Location = new System.Drawing.Point(3, 3);
             this.specificationBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.specificationBrowser.Name = "specificationBrowser";
-            this.specificationBrowser.Size = new System.Drawing.Size(508, 355);
+            this.specificationBrowser.Size = new System.Drawing.Size(662, 590);
             this.specificationBrowser.TabIndex = 0;
             // 
             // briefData
@@ -313,7 +345,7 @@
             this.briefData.Location = new System.Drawing.Point(4, 22);
             this.briefData.Name = "briefData";
             this.briefData.Padding = new System.Windows.Forms.Padding(3);
-            this.briefData.Size = new System.Drawing.Size(514, 361);
+            this.briefData.Size = new System.Drawing.Size(668, 596);
             this.briefData.TabIndex = 0;
             this.briefData.Text = "Brief Overview";
             this.briefData.UseVisualStyleBackColor = true;
@@ -324,10 +356,10 @@
             this.claimsWebBrowser.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.claimsWebBrowser.Location = new System.Drawing.Point(7, 191);
+            this.claimsWebBrowser.Location = new System.Drawing.Point(0, 127);
             this.claimsWebBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.claimsWebBrowser.Name = "claimsWebBrowser";
-            this.claimsWebBrowser.Size = new System.Drawing.Size(501, 159);
+            this.claimsWebBrowser.Size = new System.Drawing.Size(600, 466);
             this.claimsWebBrowser.TabIndex = 2;
             // 
             // itemAbstract
@@ -335,23 +367,11 @@
             this.itemAbstract.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.itemAbstract.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.itemAbstract.Location = new System.Drawing.Point(7, 66);
+            this.itemAbstract.Location = new System.Drawing.Point(3, 6);
             this.itemAbstract.Name = "itemAbstract";
-            this.itemAbstract.Size = new System.Drawing.Size(501, 120);
+            this.itemAbstract.Size = new System.Drawing.Size(591, 120);
             this.itemAbstract.TabIndex = 1;
             this.itemAbstract.Text = "";
-            // 
-            // itemTitle
-            // 
-            this.itemTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.itemTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.itemTitle.Location = new System.Drawing.Point(201, 61);
-            this.itemTitle.Name = "itemTitle";
-            this.itemTitle.Size = new System.Drawing.Size(505, 37);
-            this.itemTitle.TabIndex = 0;
-            this.itemTitle.Text = "Title of the Item";
-            this.itemTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // mainTabs
             // 
@@ -361,16 +381,81 @@
             this.mainTabs.Controls.Add(this.briefData);
             this.mainTabs.Controls.Add(this.specification);
             this.mainTabs.Controls.Add(this.figures);
+            this.mainTabs.Controls.Add(this.pdf);
+            this.mainTabs.Controls.Add(this.tabEspacenet);
+            this.mainTabs.Controls.Add(this.tabSearchHistory);
             this.mainTabs.Location = new System.Drawing.Point(201, 101);
             this.mainTabs.Name = "mainTabs";
             this.mainTabs.SelectedIndex = 0;
-            this.mainTabs.Size = new System.Drawing.Size(522, 387);
+            this.mainTabs.Size = new System.Drawing.Size(676, 622);
             this.mainTabs.TabIndex = 2;
+            this.mainTabs.SelectedIndexChanged += new System.EventHandler(this.mainTabs_SelectedIndexChanged);
+            // 
+            // pdf
+            // 
+            this.pdf.Controls.Add(this.wbPDF);
+            this.pdf.Location = new System.Drawing.Point(4, 22);
+            this.pdf.Name = "pdf";
+            this.pdf.Size = new System.Drawing.Size(668, 596);
+            this.pdf.TabIndex = 4;
+            this.pdf.Text = "PDF";
+            this.pdf.UseVisualStyleBackColor = true;
+            // 
+            // wbPDF
+            // 
+            this.wbPDF.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.wbPDF.Location = new System.Drawing.Point(0, 0);
+            this.wbPDF.MinimumSize = new System.Drawing.Size(20, 20);
+            this.wbPDF.Name = "wbPDF";
+            this.wbPDF.Size = new System.Drawing.Size(668, 596);
+            this.wbPDF.TabIndex = 0;
+            // 
+            // tabEspacenet
+            // 
+            this.tabEspacenet.Controls.Add(this.wbEspacenet);
+            this.tabEspacenet.Location = new System.Drawing.Point(4, 22);
+            this.tabEspacenet.Name = "tabEspacenet";
+            this.tabEspacenet.Size = new System.Drawing.Size(668, 596);
+            this.tabEspacenet.TabIndex = 5;
+            this.tabEspacenet.Text = "Espacenet Result";
+            this.tabEspacenet.UseVisualStyleBackColor = true;
+            // 
+            // wbEspacenet
+            // 
+            this.wbEspacenet.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.wbEspacenet.Location = new System.Drawing.Point(0, 0);
+            this.wbEspacenet.MinimumSize = new System.Drawing.Size(20, 20);
+            this.wbEspacenet.Name = "wbEspacenet";
+            this.wbEspacenet.Size = new System.Drawing.Size(668, 596);
+            this.wbEspacenet.TabIndex = 0;
+            // 
+            // tabSearchHistory
+            // 
+            this.tabSearchHistory.Controls.Add(this.historyListView);
+            this.tabSearchHistory.Location = new System.Drawing.Point(4, 22);
+            this.tabSearchHistory.Name = "tabSearchHistory";
+            this.tabSearchHistory.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSearchHistory.Size = new System.Drawing.Size(668, 596);
+            this.tabSearchHistory.TabIndex = 6;
+            this.tabSearchHistory.Text = "Search History";
+            this.tabSearchHistory.UseVisualStyleBackColor = true;
+            // 
+            // historyBindingSource
+            // 
+            this.historyBindingSource.DataMember = "history";
+            this.historyBindingSource.DataSource = this.itemDataset;
+            // 
+            // itemDataset
+            // 
+            this.itemDataset.DataSetName = "ItemDataset";
+            this.itemDataset.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // fetchDataGoogleButton
             // 
             this.fetchDataGoogleButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.fetchDataGoogleButton.Location = new System.Drawing.Point(729, 293);
+            this.fetchDataGoogleButton.Location = new System.Drawing.Point(883, 293);
             this.fetchDataGoogleButton.Name = "fetchDataGoogleButton";
             this.fetchDataGoogleButton.Size = new System.Drawing.Size(144, 27);
             this.fetchDataGoogleButton.TabIndex = 4;
@@ -381,7 +466,7 @@
             // addUSButton
             // 
             this.addUSButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.addUSButton.Location = new System.Drawing.Point(729, 455);
+            this.addUSButton.Location = new System.Drawing.Point(883, 534);
             this.addUSButton.Name = "addUSButton";
             this.addUSButton.Size = new System.Drawing.Size(144, 27);
             this.addUSButton.TabIndex = 5;
@@ -392,7 +477,7 @@
             // patPubTextBox
             // 
             this.patPubTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.patPubTextBox.Location = new System.Drawing.Point(725, 429);
+            this.patPubTextBox.Location = new System.Drawing.Point(879, 508);
             this.patPubTextBox.Mask = "00000000000";
             this.patPubTextBox.Name = "patPubTextBox";
             this.patPubTextBox.Size = new System.Drawing.Size(148, 20);
@@ -401,7 +486,7 @@
             // cpcSearchButton
             // 
             this.cpcSearchButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cpcSearchButton.Location = new System.Drawing.Point(729, 548);
+            this.cpcSearchButton.Location = new System.Drawing.Point(883, 610);
             this.cpcSearchButton.Name = "cpcSearchButton";
             this.cpcSearchButton.Size = new System.Drawing.Size(144, 27);
             this.cpcSearchButton.TabIndex = 7;
@@ -412,7 +497,7 @@
             // cpcSearchTerm
             // 
             this.cpcSearchTerm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cpcSearchTerm.Location = new System.Drawing.Point(729, 522);
+            this.cpcSearchTerm.Location = new System.Drawing.Point(883, 584);
             this.cpcSearchTerm.Name = "cpcSearchTerm";
             this.cpcSearchTerm.Size = new System.Drawing.Size(143, 20);
             this.cpcSearchTerm.TabIndex = 8;
@@ -420,7 +505,7 @@
             // notYetReviewedButton
             // 
             this.notYetReviewedButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.notYetReviewedButton.Location = new System.Drawing.Point(729, 84);
+            this.notYetReviewedButton.Location = new System.Drawing.Point(883, 84);
             this.notYetReviewedButton.Name = "notYetReviewedButton";
             this.notYetReviewedButton.Size = new System.Drawing.Size(144, 27);
             this.notYetReviewedButton.TabIndex = 3;
@@ -432,7 +517,7 @@
             // 
             this.cbNonRelevant.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbNonRelevant.AutoSize = true;
-            this.cbNonRelevant.Location = new System.Drawing.Point(12, 588);
+            this.cbNonRelevant.Location = new System.Drawing.Point(12, 823);
             this.cbNonRelevant.Name = "cbNonRelevant";
             this.cbNonRelevant.Size = new System.Drawing.Size(122, 17);
             this.cbNonRelevant.TabIndex = 9;
@@ -443,7 +528,7 @@
             // pbFetchAllGoogle
             // 
             this.pbFetchAllGoogle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbFetchAllGoogle.Location = new System.Drawing.Point(729, 326);
+            this.pbFetchAllGoogle.Location = new System.Drawing.Point(883, 326);
             this.pbFetchAllGoogle.Name = "pbFetchAllGoogle";
             this.pbFetchAllGoogle.Size = new System.Drawing.Size(144, 27);
             this.pbFetchAllGoogle.TabIndex = 10;
@@ -455,9 +540,9 @@
             // 
             this.rtbNotes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtbNotes.Location = new System.Drawing.Point(205, 510);
+            this.rtbNotes.Location = new System.Drawing.Point(205, 745);
             this.rtbNotes.Name = "rtbNotes";
-            this.rtbNotes.Size = new System.Drawing.Size(452, 72);
+            this.rtbNotes.Size = new System.Drawing.Size(606, 72);
             this.rtbNotes.TabIndex = 11;
             this.rtbNotes.Text = "";
             // 
@@ -465,7 +550,7 @@
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(205, 491);
+            this.label1.Location = new System.Drawing.Point(205, 726);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 12;
@@ -474,7 +559,7 @@
             // pbSave
             // 
             this.pbSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbSave.Location = new System.Drawing.Point(663, 510);
+            this.pbSave.Location = new System.Drawing.Point(817, 745);
             this.pbSave.Name = "pbSave";
             this.pbSave.Size = new System.Drawing.Size(56, 72);
             this.pbSave.TabIndex = 13;
@@ -485,7 +570,7 @@
             // pbDelete
             // 
             this.pbDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbDelete.Location = new System.Drawing.Point(729, 249);
+            this.pbDelete.Location = new System.Drawing.Point(883, 249);
             this.pbDelete.Name = "pbDelete";
             this.pbDelete.Size = new System.Drawing.Size(144, 27);
             this.pbDelete.TabIndex = 3;
@@ -500,7 +585,7 @@
             this.toolStripButton2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(885, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1039, 25);
             this.toolStrip1.TabIndex = 14;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -530,7 +615,7 @@
             this.cbMoveToNext.AutoSize = true;
             this.cbMoveToNext.Checked = true;
             this.cbMoveToNext.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbMoveToNext.Location = new System.Drawing.Point(729, 61);
+            this.cbMoveToNext.Location = new System.Drawing.Point(883, 61);
             this.cbMoveToNext.Name = "cbMoveToNext";
             this.cbMoveToNext.Size = new System.Drawing.Size(137, 17);
             this.cbMoveToNext.TabIndex = 15;
@@ -541,7 +626,7 @@
             // pbFetchReferences
             // 
             this.pbFetchReferences.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbFetchReferences.Location = new System.Drawing.Point(729, 376);
+            this.pbFetchReferences.Location = new System.Drawing.Point(883, 475);
             this.pbFetchReferences.Name = "pbFetchReferences";
             this.pbFetchReferences.Size = new System.Drawing.Size(144, 27);
             this.pbFetchReferences.TabIndex = 10;
@@ -549,36 +634,78 @@
             this.pbFetchReferences.UseVisualStyleBackColor = true;
             this.pbFetchReferences.Click += new System.EventHandler(this.pbFetchReferences_Click);
             // 
-            // toolsToolStripMenuItem
+            // pbGetUSPTOPDF
             // 
-            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cleanUpIrrelevantItemDataToolStripMenuItem});
-            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
-            this.toolsToolStripMenuItem.Text = "Tools";
+            this.pbGetUSPTOPDF.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbGetUSPTOPDF.Location = new System.Drawing.Point(883, 382);
+            this.pbGetUSPTOPDF.Name = "pbGetUSPTOPDF";
+            this.pbGetUSPTOPDF.Size = new System.Drawing.Size(144, 27);
+            this.pbGetUSPTOPDF.TabIndex = 16;
+            this.pbGetUSPTOPDF.Text = "Get PDF (USPTO)";
+            this.pbGetUSPTOPDF.UseVisualStyleBackColor = true;
+            this.pbGetUSPTOPDF.Click += new System.EventHandler(this.pbGetUSPTOPDF_Click);
             // 
-            // cleanUpIrrelevantItemDataToolStripMenuItem
+            // pbGetPDFGoogle
             // 
-            this.cleanUpIrrelevantItemDataToolStripMenuItem.Name = "cleanUpIrrelevantItemDataToolStripMenuItem";
-            this.cleanUpIrrelevantItemDataToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
-            this.cleanUpIrrelevantItemDataToolStripMenuItem.Text = "Clean Up Irrelevant Item Data";
-            this.cleanUpIrrelevantItemDataToolStripMenuItem.Click += new System.EventHandler(this.cleanUpIrrelevantItemDataToolStripMenuItem_Click);
+            this.pbGetPDFGoogle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbGetPDFGoogle.Location = new System.Drawing.Point(883, 415);
+            this.pbGetPDFGoogle.Name = "pbGetPDFGoogle";
+            this.pbGetPDFGoogle.Size = new System.Drawing.Size(144, 27);
+            this.pbGetPDFGoogle.TabIndex = 16;
+            this.pbGetPDFGoogle.Text = "Get PDF (Google)";
+            this.pbGetPDFGoogle.UseVisualStyleBackColor = true;
+            this.pbGetPDFGoogle.Click += new System.EventHandler(this.pbGetPDFGoogle_Click);
+            // 
+            // itemTitle
+            // 
+            this.itemTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.itemTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
+            this.itemTitle.Location = new System.Drawing.Point(201, 61);
+            this.itemTitle.Name = "itemTitle";
+            this.itemTitle.Size = new System.Drawing.Size(652, 35);
+            this.itemTitle.TabIndex = 17;
+            // 
+            // pbQueryEspacenet
+            // 
+            this.pbQueryEspacenet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbQueryEspacenet.Location = new System.Drawing.Point(882, 661);
+            this.pbQueryEspacenet.Name = "pbQueryEspacenet";
+            this.pbQueryEspacenet.Size = new System.Drawing.Size(144, 27);
+            this.pbQueryEspacenet.TabIndex = 7;
+            this.pbQueryEspacenet.Text = "Query Espacenet";
+            this.pbQueryEspacenet.UseVisualStyleBackColor = true;
+            // 
+            // historyListView
+            // 
+            this.historyListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.historyListView.Location = new System.Drawing.Point(6, 6);
+            this.historyListView.Name = "historyListView";
+            this.historyListView.Size = new System.Drawing.Size(656, 584);
+            this.historyListView.TabIndex = 0;
+            this.historyListView.UseCompatibleStateImageBehavior = false;
+            this.historyListView.View = System.Windows.Forms.View.List;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(885, 617);
+            this.ClientSize = new System.Drawing.Size(1039, 852);
+            this.Controls.Add(this.itemTitle);
+            this.Controls.Add(this.pbGetPDFGoogle);
+            this.Controls.Add(this.pbGetUSPTOPDF);
             this.Controls.Add(this.cbMoveToNext);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.pbSave);
-            this.Controls.Add(this.itemTitle);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.rtbNotes);
             this.Controls.Add(this.pbFetchReferences);
             this.Controls.Add(this.pbFetchAllGoogle);
             this.Controls.Add(this.cbNonRelevant);
             this.Controls.Add(this.cpcSearchTerm);
+            this.Controls.Add(this.pbQueryEspacenet);
             this.Controls.Add(this.cpcSearchButton);
             this.Controls.Add(this.patPubTextBox);
             this.Controls.Add(this.addUSButton);
@@ -602,6 +729,11 @@
             this.specification.ResumeLayout(false);
             this.briefData.ResumeLayout(false);
             this.mainTabs.ResumeLayout(false);
+            this.pdf.ResumeLayout(false);
+            this.tabEspacenet.ResumeLayout(false);
+            this.tabSearchHistory.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.historyBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.itemDataset)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -633,7 +765,6 @@
         private System.Windows.Forms.TabPage briefData;
         private System.Windows.Forms.WebBrowser claimsWebBrowser;
         private System.Windows.Forms.RichTextBox itemAbstract;
-        private System.Windows.Forms.Label itemTitle;
         private System.Windows.Forms.TabControl mainTabs;
         private System.Windows.Forms.Button fetchDataGoogleButton;
         private System.Windows.Forms.Button addUSButton;
@@ -654,6 +785,18 @@
         private System.Windows.Forms.Button pbFetchReferences;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cleanUpIrrelevantItemDataToolStripMenuItem;
+        private System.Windows.Forms.TabPage pdf;
+        private System.Windows.Forms.Button pbGetUSPTOPDF;
+        private System.Windows.Forms.WebBrowser wbPDF;
+        private System.Windows.Forms.Button pbGetPDFGoogle;
+        private System.Windows.Forms.TextBox itemTitle;
+        private System.Windows.Forms.Button pbQueryEspacenet;
+        private System.Windows.Forms.TabPage tabEspacenet;
+        private System.Windows.Forms.WebBrowser wbEspacenet;
+        private System.Windows.Forms.TabPage tabSearchHistory;
+        private System.Windows.Forms.BindingSource historyBindingSource;
+        private ItemDataset itemDataset;
+        private System.Windows.Forms.ListView historyListView;
     }
 }
 

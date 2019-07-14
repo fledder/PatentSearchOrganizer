@@ -14,6 +14,17 @@ using Newtonsoft.Json.Linq;
 namespace PatentSearchOrganizer
 {
     public enum Relevance { None = 0, Minimal = 10, Moderate = 20, High = 30, Unreviewed = 100};
+
+    class Constants
+    {
+        public static string GoogleUSPatentRegex = @"US(\d{6,8})[A-Z]?\d?$";
+        public static string GoogleUSDocumentRegex = @"US(\d{11})[A-Z]?\d?$";
+        public static string BareUSPatentRegex = @"^(\d{6,8})[A-Z]?\d?$";
+        public static string BareUSDocumentRegex = @"^(\d{11})[A-Z]?\d?$";
+        public static string ExtractUSPatentRegex = @"US(\d{6,8})[A-Z]?\d?";
+        public static string ExtractUSDocumentRegex = @"US(\d{11})[A-Z]?\d?";
+    }
+
     class ItemsHandler
     {
         public ItemDataset itemData;
@@ -82,10 +93,10 @@ namespace PatentSearchOrganizer
         public void updateTreeData(System.Windows.Forms.TreeView tree, bool showNotRelevant)
         {
             tree.Nodes.Clear();
-            EnumerableRowCollection<ItemDataset.itemsRow> lines =  from item in itemData.items where item.relevance > (int)Relevance.None orderby item.relevance descending select item;
+            EnumerableRowCollection<ItemDataset.itemsRow> lines =  from item in itemData.items where item.relevance > (int)Relevance.None orderby item.relevance descending, item.identifier ascending select item;
             if (showNotRelevant)
             {
-                lines = from item in itemData.items orderby item.relevance descending select item;
+                lines = from item in itemData.items orderby item.relevance descending, item.identifier ascending select item;
             }
             foreach(ItemDataset.itemsRow row in lines)
             {
@@ -120,7 +131,9 @@ namespace PatentSearchOrganizer
 
         public void searchCPC(string dataSource, string searchTerm)
         {
-            if(dataSource == "Google Patents")
+            historyItem h = new historyItem("CPC Search", searchTerm, itemData);
+
+            if (dataSource == "Google Patents")
             {
                 void parseResult(JObject result)
                 {
@@ -133,7 +146,7 @@ namespace PatentSearchOrganizer
                         if (existingResults.Count() == 0)
                         {
                             EnumerableRowCollection<ItemDataset.itemsRow> refExistRows;
-                            Regex patnoRx = new Regex(@"US(\d{7,8})[A-Z]?\d?$");
+                            Regex patnoRx = new Regex(Constants.GoogleUSPatentRegex);
                             Match patMatch = patnoRx.Match(resultIdentifier);
                             string refIdentifier = "";
                             string refType = "";
@@ -144,7 +157,7 @@ namespace PatentSearchOrganizer
                             }
                             else
                             {
-                                Regex pubnoRx = new Regex(@"US(\d{11})[A-Z]?\d?$");
+                                Regex pubnoRx = new Regex(Constants.GoogleUSDocumentRegex);
                                 Match pubMatch = pubnoRx.Match(resultIdentifier);
                                 if (pubMatch.Success)
                                 {
@@ -203,7 +216,7 @@ namespace PatentSearchOrganizer
         {
             foreach(DataRow row in itemData.Tables["items"].Rows)
             {
-                if(row["fetchLink"] == null || row["fetchLink"].ToString() == "")
+                if((row["fetchLink"] == null || row["fetchLink"].ToString() == "") && (Relevance)row["relevance"] != Relevance.None)
                 {
                     Item item = new Item((int)row["id"]);
                     item.retrieveData("Google Patents", itemData);
@@ -239,6 +252,8 @@ namespace PatentSearchOrganizer
         private string fetchLink;
         private Relevance relevance;
         private string notes;
+        private string identifier;
+        private byte[] pdf;
 
         //Getters, setters, selectors
         public string getTitle()
@@ -317,16 +332,27 @@ namespace PatentSearchOrganizer
             this.selectedImage = 0;
             this.images = new List<byte[]>();
         }
+
+        public byte[] getPDF()
+        {
+            return pdf;
+        }
         
+        public string getIdentifier()
+        {
+            return identifier;
+        }
+
         public void retrieveData(string selectedDataSource, ItemDataset itemData)
         {
 
-            string identifier = (from item in itemData.items where item.id == id select item.identifier).ElementAt(0);
+            identifier = (from item in itemData.items where item.id == id select item.identifier).ElementAt(0);
             if(selectedDataSource == "Google Patents")
             {
                 //Delete the old data. May need to make this more specific...
                 DataTable itemComponents = itemData.Tables["itemComponents"];
-                foreach (DataRow dataRow in itemComponents.Rows)
+                DataRow[] itemComponentsToDelete = itemComponents.Select("itemID = " + id);
+                foreach (DataRow dataRow in itemComponentsToDelete)
                 {
                     if ((Int32)dataRow["itemID"] == id)
                     {
@@ -410,10 +436,22 @@ namespace PatentSearchOrganizer
         {
             updateFromLocal(itemData);
 
-            if(dataSource == "Google Patents")
+            
+
+            if (dataSource == "Google Patents")
             {
-                string identifier = (from item in itemData.items where item.id == id select item.identifier).ElementAt(0);
-                fetchLink = "https://patents.google.com/patent/US" + identifier;
+                identifier = (from item in itemData.items where item.id == id select item.identifier).ElementAt(0);
+
+                historyItem h = new historyItem("Reference Fetch", identifier, itemData);
+
+                if (Regex.Match(identifier, Constants.BareUSDocumentRegex).Success || Regex.Match(identifier, Constants.BareUSPatentRegex).Success)
+                {
+                    fetchLink = "https://patents.google.com/patent/US" + identifier;
+                }
+                else
+                {
+                    fetchLink = "https://patents.google.com/patent/" + identifier;
+                }
 
                 //get the document from google. this will not be the same as the one
                 //rendered for a normal web browser
@@ -459,7 +497,7 @@ namespace PatentSearchOrganizer
                                 {
                                     string text = link.Attributes["href"].Value;
 
-                                    Regex patnoRx = new Regex(@"US(\d{7,8})[A-Z]\d");
+                                    Regex patnoRx = new Regex(Constants.ExtractUSPatentRegex);
                                     Match patMatch = patnoRx.Match(text);
 
                                     if (patMatch.Success)
@@ -468,7 +506,7 @@ namespace PatentSearchOrganizer
                                     }
                                     else
                                     {
-                                        Regex pubnoRx = new Regex(@"US(\d{11})[A-Z]\d");
+                                        Regex pubnoRx = new Regex(Constants.ExtractUSDocumentRegex);
                                         Match pubMatch = pubnoRx.Match(text);
                                         if (pubMatch.Success)
                                         {
@@ -476,7 +514,8 @@ namespace PatentSearchOrganizer
                                         }
                                         else
                                         {
-                                            newRefIdentifier = "";
+                                            string[] parts = text.Split('/');
+                                            newRefIdentifier = parts[2];
                                         }
                                     }
                                 }
@@ -553,10 +592,14 @@ namespace PatentSearchOrganizer
                 {
                     images.Add(row.componentData);
                 }
+                else if(row.componentType == "PDF")
+                {
+                    pdf = row.componentData;
+                }
             }
-
             ItemDataset.itemsRow itemRow = (from item in itemData.items where item.id == id select item).First();
-            if(itemRow["notes"] != null)
+            identifier = itemRow.identifier;
+            if (itemRow["notes"] != null)
             {
                 notes = itemRow["notes"].ToString();
             }
@@ -589,6 +632,179 @@ namespace PatentSearchOrganizer
             DataRow deleteRow = dataset.Tables["items"].Select("id = " + id).First();
             deleteRow.Delete();
             dataset.AcceptChanges();
+        }
+
+        public void retrievePDF(string dataSource, ItemDataset dataset)
+        {
+            if (dataSource == "USPTO")
+            {
+                string groupA;
+                string groupB;
+                string groupC;
+                string groupD;
+
+                updateFromLocal(dataset);
+
+                Regex patnoRx = new Regex(Constants.BareUSPatentRegex);
+                Match patMatch = patnoRx.Match(identifier);
+                Regex pubnoRx = new Regex(Constants.BareUSDocumentRegex);
+                Match pubMatch = pubnoRx.Match(identifier);
+
+                if (patMatch.Success)
+                {
+                    string paddedIdentifier = Int64.Parse(identifier).ToString("00000000");
+                    groupA = paddedIdentifier.Substring(0, 3);
+                    groupB = paddedIdentifier.Substring(3, 3);
+                    groupC = paddedIdentifier.Substring(6, 2);
+                    string fetchURL = "http://pimg-fpiw.uspto.gov/fdd/" + groupC + "/" + groupB + "/" + groupA + "/0.pdf";
+                    using (WebClient client = new WebClient())
+                    {
+                        pdf = client.DownloadData(fetchURL);
+                    }
+                    DataRow newRow = dataset.Tables["itemComponents"].NewRow();
+                    newRow["itemID"] = id;
+                    newRow["componentType"] = "PDF";
+                    newRow["componentData"] = pdf;
+                    dataset.Tables["itemComponents"].Rows.Add(newRow);
+                    dataset.AcceptChanges();
+                }
+                else if (pubMatch.Success)
+                {
+                    string paddedIdentifier = Int64.Parse(identifier).ToString("00000000000");
+                    groupA = paddedIdentifier.Substring(0, 4);
+                    groupB = paddedIdentifier.Substring(4, 3);
+                    groupC = paddedIdentifier.Substring(7, 2);
+                    groupD = paddedIdentifier.Substring(9, 2);
+                    string fetchURL = "http://pimg-faiw.uspto.gov/fdd/" + groupD + "/" + groupA + "/" + groupC + "/" + groupB + "/0.pdf";
+                    using (WebClient client = new WebClient())
+                    {
+                        pdf = client.DownloadData(fetchURL);
+                    }
+                    DataRow newRow = dataset.Tables["itemComponents"].NewRow();
+                    newRow["itemID"] = id;
+                    newRow["componentType"] = "PDF";
+                    newRow["componentData"] = pdf;
+                    dataset.Tables["itemComponents"].Rows.Add(newRow);
+                    dataset.AcceptChanges();
+                }
+            }
+            else if (dataSource == "Google Patents")
+            {
+                if (Regex.Match(identifier, @"^\d*$").Success)
+                {
+                    fetchLink = "https://patents.google.com/patent/US" + identifier;
+                }
+                else
+                {
+                    fetchLink = "https://patents.google.com/patent/" + identifier;
+                }
+                HtmlWeb hw = new HtmlWeb();
+                HtmlDocument detailsDocument = hw.Load(fetchLink);
+                HtmlNodeCollection linkCandidates = detailsDocument.DocumentNode.SelectNodes("/html/body/search-app/article/a");
+                string pdfFetchLink = "";
+                if(linkCandidates != null && linkCandidates.Count() > 0)
+                {
+                    foreach (HtmlNode node in linkCandidates)
+                    {
+                        if (node.InnerHtml.Contains("Download PDF"))
+                        {
+                            pdfFetchLink = node.Attributes["href"].Value;
+                        }
+                    }
+                    if (pdfFetchLink.Length > 0)
+                    {
+                        using (WebClient client = new WebClient())
+                        {
+                            byte[] pdfData = client.DownloadData(pdfFetchLink);
+                            DataRow newRow = dataset.Tables["itemComponents"].NewRow();
+                            newRow["itemID"] = id;
+                            newRow["componentType"] = "PDF";
+                            newRow["componentData"] = pdfData;
+                            dataset.Tables["itemComponents"].Rows.Add(newRow);
+                            dataset.AcceptChanges();
+                        }
+                    }
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("Could not find patent in Google Patents", "PDF Not Found");
+                }
+            }
+        }
+    }
+
+    class historyItem
+    {
+        int id;
+        DateTime timestamp;
+        string type;
+        string query;
+
+        public historyItem(int id, ItemDataset i)
+        {
+            this.id = id;
+            this.getDataFromDatabase(id, i);
+        }
+
+        public historyItem(string type, string query, ItemDataset i)
+        {
+            this.type = type;
+            this.query = query;
+            this.timestamp = System.DateTime.Now;
+            this.storeNewRecord(i);
+        }
+
+        public void getDataFromDatabase(int id, ItemDataset i)
+        {
+            ItemDataset.historyDataTable h = i.history;
+            ItemDataset.historyRow r = (from ItemDataset.historyRow item in h.Rows where item.id == id select item).First();
+            this.timestamp = r.timestamp;
+            this.type = r.type;
+            this.query = r.query;
+        }
+
+        public void storeNewRecord(ItemDataset i)
+        {
+            ItemDataset.historyDataTable h = i.history;
+            ItemDataset.historyRow newRow = h.NewhistoryRow();
+            newRow.timestamp = this.timestamp;
+            newRow.type = this.type;
+            newRow.query = this.query;
+            h.Rows.Add(newRow);
+            h.AcceptChanges();
+        }
+    }
+
+    class Historian
+    {
+        public List<historyItem> historyItems;
+
+        public Historian(ItemDataset i)
+        {
+            this.historyItems = new List<historyItem>();
+            this.refresh(i);
+        }
+
+        public void refresh(ItemDataset i)
+        {
+            ItemDataset.historyDataTable h = i.history;
+            this.historyItems.Clear();
+            foreach (ItemDataset.historyRow row in h.Rows)
+            {
+                this.historyItems.Add(new historyItem(row.id, i));
+            }
+        }
+
+        public void getListViewData(System.Windows.Forms.ListView v, ItemDataset i)
+        {
+            ItemDataset.historyDataTable h = i.history;
+            v.Items.Clear();
+            this.refresh(i);
+
+            foreach (ItemDataset.historyRow row in h.Rows)
+            {
+                v.Items.Add(row.timestamp.ToLongDateString() + " " + row.timestamp.ToLongTimeString() + ": " + row.type + ": " + row.query);
+            }
         }
     }
 }
